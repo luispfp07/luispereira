@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Luís Pereira – Multimedia Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600&display=swap">
+    <style>
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.618rem;
+            color: #F24236;
+            transition: opacity 0.5s ease;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Acumin Pro', sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            color: #111;
+        }
+
+        .background-layers {
+            position: fixed;
+            inset: 0;
+            z-index: -999;
+            pointer-events: none;
+        }
+
+        .dot-layer {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(lightgrey 5px, transparent 5px);
+            background-size: 30px 30px;
+            opacity: 0.15;
+        }
+
+        .layer1 {
+            animation: bgMove1 60s linear infinite;
+        }
+
+        .layer2 {
+            animation: bgMove2 90s linear infinite reverse;
+        }
+
+        @keyframes bgMove1 {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 1000px 1000px;
+            }
+        }
+
+        @keyframes bgMove2 {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: -800px -800px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            body {
+                display: flex;
+            }
+        }
+
+        .card-left {
+            width: 40%;
+            padding: 2rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            align-content: flex-end;
+        }
+
+
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4.236rem;
+            color: #2D2DFF;
+        }
+
+        .card-left h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.618rem;
+
+        }
+
+        h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.618rem;
+
+        }
+
+        .main h2 {
+            margin-top: 2rem;
+            color: #F24236;
+        }
+
+        .profile-pic-wrapper {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 2rem;
+            transform: rotate(-2deg);
+            box-shadow: -10px 10px 0 rgba(242, 66, 54, 0.85), 10px -10px 0 rgba(45, 45, 255, 0.85);
+        }
+
+        .profile-pic-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .card-buttons a {
+            font-size: 1rem;
+            text-decoration: none;
+            color: #111;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .card-buttons a:hover,
+        .card-buttons a.active {
+            color: #F24236;
+        }
+
+        .card-buttons a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            height: 2px;
+            width: 0;
+            background: #F24236;
+            transition: width 0.3s;
+        }
+
+        .card-buttons a:hover::after,
+        .card-buttons a.active::after {
+            width: 100%;
+        }
+
+        .main {
+            margin-left: 40%;
+            padding: 2rem;
+            max-width: 100%;
+            text-align: justify;
+        }
+
+        h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #F24236;
+            margin-top: 2rem;
+        }
+
+        h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .skillstools {
+            display: flex;
+            gap: 17rem;
+        }
+
+        .skillstools ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .portfolio {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .portfolio > div {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: flex-start;
+        }
+
+        /* Imagens quadradas */
+        .portfolio .square {
+            width: calc(33.333% - 0.67rem); /* 3 por linha com espaçamento */
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Imagens retangulares */
+        .portfolio .rectangle {
+            width: calc(50% - 0.5rem);
+            aspect-ratio: 2 / 1;
+            object-fit: cover;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .portfolio > div {
+                flex-direction: column;
+            }
+
+            .portfolio .square,
+            .portfolio .rectangle {
+                width: 100%;
+            }
+        }
+
+        .portfolio-item {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            text-decoration: none;
+            color: white;
+            width: fit-content; /* Garante que o contêiner só ocupa o espaço da imagem */
+        }
+
+        .portfolio-item img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .portfolio-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2));
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            font-family: 'Acumin Pro', sans-serif;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .portfolio-item:hover .overlay {
+            opacity: 1;
+        }
+
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .card-left {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 2rem;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                text-align: center;
+                z-index: 1;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .profile-pic-wrapper {
+                position: relative;
+                width: 150px;
+                height: 150px;
+                margin: 1rem auto;
+                transform: none;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 2rem 1rem;
+                width: 100%;
+            }
+
+            .skillstools {
+                display: flex;
+                gap: 30%;
+            }
+
+            .card-buttons {
+                display: flex;
+                gap: 1rem;
+            }
+
+            .card-buttons a {
+                width: 100%;
+                text-align: center;
+            }
+
+            footer {
+                text-align: center;
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="loader">
+    <div class="loader-content">
+        <p>SO GLAD YOU COULD MAKE IT!</p>
+    </div>
+</div>
+
+<div class="background-layers">
+    <div class="dot-layer layer1"></div>
+    <div class="dot-layer layer2"></div>
+</div>
+<div class="card-left">
+
+    <div class="profile-pic-wrapper">
+        <img src="Luís.JPG" alt="Profile Photo"/>
+    </div>
+    <h1>LUÍS PEREIRA</h1>
+    <h2>MULTIMEDIA DESIGNER</h2>
+
+    <div class="card-buttons">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contacts</a>
+        <a href="#" download>Download Resumé</a>
+    </div>
+</div>
+
+<div class="main">
+    <section id="about">
+        <h2>ABOUT</h2>
+        <p>
+            Multimedia designer with a passion for visual storytelling, inspired by cinema and TV series. Skilled in
+            graphic design, web design, branding, and photo and video editing. Seeking a new challenge in a creative and
+            collaborative environment where I can continue to grow.
+        </p>
+
+        <h2>EXPERIENCE</h2>
+        Dalifal – Food Products Distribution, Lda. <br><strong>Multimedia Designer</strong> <i>(Apr 2023 – Present)</i>
+        <p>
+            I began my journey at Dalifal with a professional internship in the marketing department and, after joining
+            the staff, took full responsibility for the department. I currently work in both design and marketing
+            management for the company.
+
+            My duties include creating visual content (social media posts, posters, flyers, packaging) for the brands
+            Neutura and the online supermarket Até Ti (Dalifal), as well as Penela Center, Minipreço Penela, and Box
+            Renting (Nutrimpor).
+
+            I manage the social media accounts of Até Ti, Neutura, and Bonini Portugal, including planning, content
+            creation, copywriting, and scheduling.
+
+            I also develop email marketing campaigns for Até Ti, focusing on promotions, product launches, and customer
+            retention. Additionally, I update and maintain the Até Ti website, editing product images and creating
+            banners for promotional campaigns. </p>
+
+        <h2>TOOLS AND SKILLS</h2>
+        <div class="skillstools">
+
+            <ul>
+                <li>After Effects</li>
+                <li>Illustrator</li>
+                <li>InDesign</li>
+                <li>Photoshop</li>
+                <li>Figma</li>
+                <li>HTML/CSS</li>
+                <li>Javascript</li>
+                <li>WordPress</li>
+                <li>Mailchimp</li>
+            </ul>
+
+            <ul>
+                <li>Branding</li>
+                <li>Editorial Design</li>
+                <li>Graphic Design</li>
+                <li>Web Design</li>
+                <li>Photo and Video Editing</li>
+                <li>Email Marketing</li>
+                <li>Social Media Management</li>
+                <li>Data Visualization</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="work">
+        <h2>WORK</h2>
+        <p>A collection of works done during my time in Dalifal and some University projects.</p>
+
+        <div class="portfolio">
+            <div>
+                <a class="portfolio-item rectangle">
+                    <img src="Portfolio-01.png" alt="Sacos Neutura">
+                    <div class="overlay">
+                        <p>Embalagens Espetadas e Migas Neutura
+                            <br>
+                            <i style="font-size: 11px">(2024-Present)</i></p>
+                    </div>
+                </a>
+                <a class="portfolio-item rectangle" href="https://youtube.com/shorts/QAVC6E3Mtes?si=bvqWcfVXAo77pEUe" target="_blank">
+                    <img src="Portfolio-02.png" alt="Carrinha Neutura">
+                    <div class="overlay">
+                        <p>Carrinha Neutura
+                            <br>
+                            <i style="font-size: 11px">2025</i></p>
+                    </div>
+                </a>
+            </div>
+
+            <div>
+                <a class="portfolio-item square" href="https://www.facebook.com/Ateti.pt" target="_blank">
+                    <img src="Portfolio-03.png" alt="Até Ti"/>
+                    <div class="overlay">
+                        <p>Até Ti
+                            <br>
+                            <i style="font-size: 11px">(2023-Present)</i></p>
+                    </div>
+                </a>
+
+                <a class="portfolio-item square" href="https://www.facebook.com/Ateti.pt" target="_blank">
+                    <img src="Portfolio-04.png" alt="Até Ti"/>
+                    <div class="overlay">
+                        <p>Até Ti
+                            <br>
+                            <i style="font-size: 11px">(2023-Present)</i></p>
+                    </div>
+                </a>
+                <a class="portfolio-item square" href="https://www.facebook.com/Ateti.pt" target="_blank">
+                    <img src="Portfolio-05.png" alt="Até Ti"/>
+                    <div class="overlay">
+                        <p>Até Ti
+                            <br>
+                            <i style="font-size: 11px">(2023-Present)</i></p>
+                    </div>
+                </a>
+            </div>
+
+            <div>
+                <a class="portfolio-item square" href="https://www.facebook.com/penelacenter" target="_blank">
+                    <img src="Portfolio-06.png" alt="Penela Center"/>
+                    <div class="overlay">
+                        <p>Penela Center
+                            <br>
+                            <i style="font-size: 11px">(2023-Present)</i></p>
+                    </div>
+                </a>
+                <a class="portfolio-item square" href="https://www.facebook.com/miniprecopenela" target="_blank">
+                    <img src="Portfolio-07.png" alt="Minipreço Penela"/>
+                    <div class="overlay">
+                        <p>Minipreço Penela
+                            <br>
+                            <i style="font-size: 11px">(2023-Present)</i></p>
+                    </div>
+                </a>
+                <a class="portfolio-item square" href="https://www.facebook.com/in.out.BoxRenting" target="_blank">
+                    <img src="Portfolio-08.png" alt="Box Renting"/>
+                    <div class="overlay">
+                        <p>Box Renting
+                            <br>
+                            <i style="font-size: 11px">(2023-Present)</i></p>
+                    </div>
+                </a>
+
+            </div>
+
+            <div>
+                <a class="portfolio-item square" href="https://drive.google.com/file/d/1-MNtU2jg28soauneEN1vkpZhFIp_Iv0d/view?usp=sharing" target="_blank">
+                    <img src="Portfolio-10.png" alt="Marketing"/>
+                    <div class="overlay">
+                        <p>Marketing and Digital Communication
+                            <br>
+                            <i style="font-size: 11px">(2021)</i></p>
+                    </div>
+                </a>
+                <a class="portfolio-item square" href="https://student.dei.uc.pt/~pchurro/minorities_in_design/" target="_blank">
+                    <img src="Portfolio-09.png" alt="Data Viz"/>
+                    <div class="overlay">
+                        <p>Data Visualization
+                            <br>
+                            <i style="font-size: 11px">(2021)</i></p>
+                    </div>
+                </a>
+                <a class="portfolio-item square" href="https://drive.google.com/file/d/1tWXPrT0QFhSi0OZ80aew3U6y_mlxhz2H/view?usp=sharing" target="_blank">
+                    <img src="Portfolio-11.png" alt="Existências"/>
+                    <div class="overlay">
+                        <p>Audiovisual Communication
+                            <br>
+                            <i style="font-size: 11px">(2019)</i></p>
+                    </div>
+                </a>
+            </div>
+
+
+        </div>
+    </section>
+
+    <footer id="contact">
+        <h2>CONTACTS</h2>
+        <p>Let’s talk: luispfp07@gmail.com | <a href="https://www.linkedin.com/in/lpfpereira/" target="_blank">linkedin.com/in/lpfpereira/</a>
+        </p>
+    </footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
