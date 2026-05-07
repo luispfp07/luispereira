@@ -1,548 +1,645 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Luís Pereira – Multimedia Designer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600&display=swap">
-    <style>
-        #loader {
-            position: fixed;
-            inset: 0;
-            background: #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.618rem;
-            color: #F24236;
-            transition: opacity 0.5s ease;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portefólio de Luís Pereira, Designer Multimédia.">
+  <title>Luís Pereira | Portfolio</title>
+  <style>
+    /* RESET & VARIÁVEIS */
+    :root {
+      --black: #050505;
+      --white: #f9f9f9;
+    }
 
-        #loader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
 
-        body {
-            font-family: 'Acumin Pro', sans-serif;
-            line-height: 1.6;
-            background-color: #f5f5f5;
-            color: #111;
-        }
+    /* FUNDO BASE */
+    body {
+      background-color: var(--white);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: var(--black);
+      overflow-x: hidden;
+    }
 
-        .background-layers {
-            position: fixed;
-            inset: 0;
-            z-index: -999;
-            pointer-events: none;
-        }
+    /* CLASSE UTILITÁRIA: EFEITO MARCADOR BRUTALISTA */
+    .marcador {
+      background-color: var(--white);
+      display: inline;
+      box-shadow: 0.25em 0 0 var(--white), -0.25em 0 0 var(--white);
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
 
-        .dot-layer {
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(lightgrey 5px, transparent 5px);
-            background-size: 30px 30px;
-            opacity: 0.15;
-        }
+    /* ENVOLVENTE PRINCIPAL - ESCALA 90% */
+    .site-wrapper {
+      width: 100%;
+      max-width: 1440px; /* Reduzido de 1600px */
+      margin: 0 auto;
+      padding: 0 6vw; /* Ligeiramente mais margem para dar o efeito de zoom out */
+      position: relative;
+    }
 
-        .layer1 {
-            animation: bgMove1 60s linear infinite;
-        }
+    /* NAVEGAÇÃO */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 6vw;
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      /* Ligeiro gradiente para a nav ser legível quando as fotos passam por trás */
+      background: linear-gradient(to bottom, rgba(249, 249, 249, 0.95) 0%, rgba(249, 249, 249, 0) 100%);
+    }
 
-        .layer2 {
-            animation: bgMove2 90s linear infinite reverse;
-        }
+    /* ESTADO ATIVO: Pinta o marcador de preto */
 
-        @keyframes bgMove1 {
-            0% {
-                background-position: 0 0;
-            }
-            100% {
-                background-position: 1000px 1000px;
-            }
-        }
+    .nav-links a.active .marcador {
+      background-color: var(--black);
+      color: var(--white);
+      box-shadow: 0.25em 0 0 var(--black), -0.25em 0 0 var(--black);
+    }
 
-        @keyframes bgMove2 {
-            0% {
-                background-position: 0 0;
-            }
-            100% {
-                background-position: -800px -800px;
-            }
-        }
+    .logo {
+      font-size: clamp(1.3rem, 2.7vw, 1.8rem); /* Reduzido 10% */
+      font-weight: 800;
+      text-transform: lowercase;
+      text-decoration: none;
+      color: var(--black);
+      letter-spacing: -2px;
+    }
 
-        @media (min-width: 769px) {
-            body {
-                display: flex;
-            }
-        }
+    .nav-links {
+      display: flex;
+      gap: clamp(1.3rem, 2.7vw, 2.7rem);
+      flex-wrap: wrap;
+    }
 
-        .card-left {
-            width: 40%;
-            padding: 2rem;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            align-content: flex-end;
-        }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--black);
+      font-weight: 800;
+      text-transform: lowercase;
+      font-size: clamp(0.9rem, 1.35vw, 1.08rem); /* Reduzido 10% */
+      letter-spacing: -1px;
+      transition: color 0.3s ease, transform 0.3s ease;
+      display: inline-block;
+      padding: 5px 0;
+    }
 
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: #666;
+      outline: none;
+    }
 
-        h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 4.236rem;
-            color: #2D2DFF;
-        }
+    .nav-links a:focus-visible .marcador {
+      background-color: var(--black);
+      color: var(--white);
+      box-shadow: 0.25em 0 0 var(--black), -0.25em 0 0 var(--black);
+    }
 
-        .card-left h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.618rem;
+    /* HERO SECTION */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 80vh;
+      position: relative;
+      padding: 5vh 0 10vh 0;
+    }
 
-        }
+    .hero-text {
+      position: relative;
+      z-index: 10;
+      pointer-events: none;
+      width: 60%;
+    }
 
-        h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.618rem;
+    .hero-text h1 {
+      font-size: clamp(3.6rem, 10.8vw, 10.8rem); /* Reduzido 10% */
+      line-height: 1.1;
+      letter-spacing: -0.06em;
+      text-transform: lowercase;
+      margin-bottom: 4vh;
+      word-wrap: break-word;
+    }
 
-        }
+    .hero-text h2 {
+      font-size: clamp(1.08rem, 2.7vw, 2.25rem); /* Reduzido 10% */
+      line-height: 1.4;
+      text-transform: lowercase;
+      font-weight: bold;
+      letter-spacing: -0.02em;
+      max-width: 540px;
+    }
 
-        .main h2 {
-            margin-top: 2rem;
-            color: #F24236;
-        }
+    .hero-image-container {
+      position: absolute;
+      right: 0;
+      width: 45%;
+      max-width: 540px; /* Reduzido de 600px */
+      z-index: 5;
+      display: flex;
+      justify-content: flex-end;
+    }
 
-        .profile-pic-wrapper {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            margin-bottom: 2rem;
-            transform: rotate(-2deg);
-            box-shadow: -10px 10px 0 rgba(242, 66, 54, 0.85), 10px -10px 0 rgba(45, 45, 255, 0.85);
-        }
+    .hero-image {
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s;
+      mix-blend-mode: darken;
+    }
 
-        .profile-pic-wrapper img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+    /* SECÇÕES GERAIS */
+    section {
+      padding: 9vh 0; /* Reduzido de 10vh */
+    }
 
-        .card-buttons {
-            display: flex;
-            gap: 1rem;
-        }
+    .section-title {
+      font-size: clamp(2.7rem, 5.4vw, 5.4rem); /* Reduzido 10% */
+      text-transform: lowercase;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 6vh;
+    }
 
-        .card-buttons a {
-            font-size: 1rem;
-            text-decoration: none;
-            color: #111;
-            position: relative;
-            transition: color 0.3s;
-        }
+    /* ABOUT SECTION */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6vw;
+      font-size: clamp(1.08rem, 1.8vw, 1.62rem); /* Reduzido 10% */
+      letter-spacing: -0.02em;
+    }
 
-        .card-buttons a:hover,
-        .card-buttons a.active {
-            color: #F24236;
-        }
+    .about-text p {
+      margin-bottom: 1.5em;
+      line-height: 1.6;
+    }
 
-        .card-buttons a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-            height: 2px;
-            width: 0;
-            background: #F24236;
-            transition: width 0.3s;
-        }
+    /* SKILLS */
+    .skills-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 22px; /* Ligeiramente mais pequeno */
+      align-content: flex-start;
+    }
 
-        .card-buttons a:hover::after,
-        .card-buttons a.active::after {
-            width: 100%;
-        }
+    .skills-list li {
+      font-size: clamp(1.6rem, 2.7vw, 2.25rem); /* Reduzido 10% */
+      font-weight: 800;
+      text-transform: lowercase;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      color: var(--black);
+      opacity: 0.8;
+      transition: opacity 0.3s, transform 0.3s;
+      cursor: default;
+      display: inline-block;
+    }
 
-        .main {
-            margin-left: 40%;
-            padding: 2rem;
-            max-width: 100%;
-            text-align: justify;
-        }
+    .skills-list li:hover {
+      opacity: 1;
+      transform: scale(1.05) rotate(-2deg);
+    }
 
-        h3 {
-            font-family: 'Bebas Neue', sans-serif;
-            color: #F24236;
-            margin-top: 2rem;
-        }
+    /* FOOTER / CONTACTOS */
+    footer {
+      padding: 13vh 0; /* Reduzido de 15vh */
+      background-color: transparent;
+      color: var(--black);
+      text-align: left;
+    }
 
-        h4 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.2rem;
-            margin-top: 1rem;
-        }
+    footer h2 {
+      font-size: clamp(2.7rem, 7.2vw, 7.2rem); /* Reduzido 10% */
+      text-transform: lowercase;
+      letter-spacing: -0.05em;
+      line-height: 1.05;
+      margin-bottom: 5vh;
+    }
 
-        .skillstools {
-            display: flex;
-            gap: 17rem;
-        }
+    .contact-email {
+      display: inline-block;
+      font-size: clamp(1.35rem, 3.6vw, 3.6rem); /* Reduzido 10% */
+      font-weight: 800;
+      color: var(--black);
+      text-decoration: none;
+      text-transform: lowercase;
+      letter-spacing: -2px;
+      transition: color 0.3s;
+      position: relative;
+    }
 
-        .skillstools ul {
-            list-style: none;
-            padding-left: 0;
-        }
+    .contact-email::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: clamp(2px, 0.9vw, 7px);
+      background: var(--black);
+      bottom: -5px;
+      left: 0;
+      transform: scaleX(1);
+      transform-origin: bottom right;
+      transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+    }
 
-        footer {
-            margin-top: 4rem;
-            font-size: 1rem;
-            color: #555;
-        }
+    .contact-email:hover::after {
+      transform: scaleX(0);
+      transform-origin: bottom left;
+    }
 
-        .portfolio {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
+    .social-links {
+      margin-top: 8vh;
+      display: flex;
+      gap: 3vw;
+      flex-wrap: wrap;
+    }
 
-        .portfolio > div {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: flex-start;
-        }
+    .social-links a {
+      color: var(--black);
+      text-decoration: none;
+      text-transform: lowercase;
+      font-size: clamp(1.08rem, 1.35vw, 1.35rem); /* Reduzido 10% */
+      font-weight: bold;
+      letter-spacing: -1px;
+      padding: 5px 0;
+    }
 
-        /* Imagens quadradas */
-        .portfolio .square {
-            width: calc(33.333% - 0.67rem); /* 3 por linha com espaçamento */
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-        }
+    .social-links a:hover {
+      text-decoration: line-through;
+    }
 
-        /* Imagens retangulares */
-        .portfolio .rectangle {
-            width: calc(50% - 0.5rem);
-            aspect-ratio: 2 / 1;
-            object-fit: cover;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-        }
+    /* ANIMAÇÕES GERAIS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s cubic-bezier(0.2, 1, 0.3, 1), transform 1s cubic-bezier(0.2, 1, 0.3, 1);
+    }
 
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .portfolio > div {
-                flex-direction: column;
-            }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        transition: none;
+        opacity: 1;
+        transform: none;
+      }
+      html {
+        scroll-behavior: auto;
+      }
+    }
 
-            .portfolio .square,
-            .portfolio .rectangle {
-                width: 100%;
-            }
-        }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        .portfolio-item {
-            position: relative;
-            display: inline-block;
-            overflow: hidden;
-            text-decoration: none;
-            color: white;
-            width: fit-content; /* Garante que o contêiner só ocupa o espaço da imagem */
-        }
+    /* RESPONSIVO MOBILE */
+    @media (max-width: 900px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px 0;
+        background: rgba(249, 249, 249, 0.95);
+      }
 
-        .portfolio-item img {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 5vh 0;
+      }
 
-        .portfolio-item .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2));
-            display: flex;
-            justify-content: center;
-            align-items: end;
-            font-family: 'Acumin Pro', sans-serif;
-            font-size: 1.1rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            text-align: center;
-            pointer-events: none;
-        }
+      .hero-text {
+        width: 100%;
+        margin-bottom: 4vh;
+      }
 
-        .portfolio-item:hover .overlay {
-            opacity: 1;
-        }
+      .hero-text h1 {
+        margin-left: 0;
+      }
 
+      .hero-image-container {
+        position: relative;
+        width: 100%;
+        justify-content: flex-start;
+      }
 
-        /* === RESPONSIVE === */
-        @media (max-width: 768px) {
-            .card-left {
-                position: relative;
-                width: 100%;
-                height: auto;
-                padding: 2rem;
-                border-right: none;
-                border-bottom: 1px solid #ddd;
-                text-align: center;
-                z-index: 1;
-            }
+      .about-content {
+        grid-template-columns: 1fr;
+      }
 
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-            }
-
-            .profile-pic-wrapper {
-                position: relative;
-                width: 150px;
-                height: 150px;
-                margin: 1rem auto;
-                transform: none;
-            }
-
-            .main {
-                margin-left: 0;
-                padding: 2rem 1rem;
-                width: 100%;
-            }
-
-            .skillstools {
-                display: flex;
-                gap: 30%;
-            }
-
-            .card-buttons {
-                display: flex;
-                gap: 1rem;
-            }
-
-            .card-buttons a {
-                width: 100%;
-                text-align: center;
-            }
-
-            footer {
-                text-align: center;
-                padding: 2rem 1rem;
-            }
-        }
-    </style>
+      .social-links {
+        gap: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-<div id="loader">
-    <div class="loader-content">
-        <p>SO GLAD YOU COULD MAKE IT!</p>
+
+<canvas id="halftone-canvas" aria-hidden="true"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
+
+<div class="site-wrapper">
+
+  <nav>
+    <a href="index.html" class="logo" aria-label="Voltar à página inicial"><span class="marcador">lp.</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="active"><span class="marcador">about</span></a>
+      <a href="projetos.html"><span class="marcador">projects</span></a>
+      <a href="cv.html"><span class="marcador">cv</span></a>
     </div>
-</div>
+  </nav>
 
-<div class="background-layers">
-    <div class="dot-layer layer1"></div>
-    <div class="dot-layer layer2"></div>
-</div>
-<div class="card-left">
-
-    <div class="profile-pic-wrapper">
-        <img src="Luís.JPG" alt="Profile Photo"/>
+  <header class="hero">
+    <div class="hero-text reveal">
+      <h1><span class="marcador">luís<br>pereira</span></h1>
+      <h2><span class="marcador">multimedia designer</span></h2>
     </div>
-    <h1>LUÍS PEREIRA</h1>
-    <h2>MULTIMEDIA DESIGNER</h2>
-
-    <div class="card-buttons">
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
-        <a href="#contact">Contacts</a>
-        <a href="https://drive.google.com/file/d/1JxMq8Fv1FBAVipeasqc-KL2mc8bAtOyC/view?usp=sharing" target="_blank">Download Resumé</a>
+    <div class="hero-image-container reveal" id="hero-image-wrapper">
+      <canvas id="profile-canvas" class="hero-image" aria-hidden="true"></canvas>
     </div>
+  </header>
+
+  <section id="sobre">
+    <h2 class="section-title reveal"><span class="marcador">about</span></h2>
+    <div class="about-content reveal">
+      <div class="about-text">
+        <p><span class="marcador"><strong>Hi, I'm Luís.</strong> Multimedia designer with a passion for visual storytelling, inspired by movies and TV shows.</span></p>
+        <p><span class="marcador">With expertise in graphic design, web design, branding, and image and video editing, I am looking for a new challenge in a creative and collaborative environment where I can continue to grow.</span></p>
+      </div>
+      <ul class="skills-list">
+        <li><span class="marcador">branding</span></li>
+        <li><span class="marcador">editorial</span></li>
+        <li><span class="marcador">web design</span></li>
+        <li><span class="marcador">image & video editing</span></li>
+        <li><span class="marcador">creative suite</span></li>
+        <li><span class="marcador">email marketing</span></li>
+        <li><span class="marcador">social media management</span></li>
+
+
+      </ul>
+    </div>
+  </section>
+
+
+  <footer id="contactos">
+    <h2 class="reveal"><span class="marcador">let's work<br>together</span></h2>
+    <ul style="display: flex">
+      <a href="mailto:luispfp07@gmail.com" class="contact-email reveal"><span class="marcador">luispfp07@gmail.com</span></a>
+      <br> <br>
+      <a href="cv.html" class="contact-email reveal" style="margin-left: 20px"><span class="marcador">cv</span></a>
+    </ul>
+
+
+
+  </footer>
+
 </div>
 
-<div class="main">
-    <section id="about">
-        <h2>ABOUT</h2>
-        <p>
-            Multimedia designer with a passion for visual storytelling, inspired by cinema and TV series. Skilled in
-            graphic design, web design, branding, and photo and video editing. Seeking a new challenge in a creative and
-            collaborative environment where I can continue to grow.
-        </p>
+<script>
+  // ==========================================
+  // 1. REVEAL AO FAZER SCROLL
+  // ==========================================
+  function revealElements() {
+    const reveals = document.querySelectorAll(".reveal");
+    const windowHeight = window.innerHeight;
 
-        <h2>EXPERIENCE</h2>
-        Dalifal – Food Products Distribution, Lda. <br><strong>Multimedia Designer</strong> <i>(Apr 2023 – Present)</i>
-        <p>
-            I began my journey at Dalifal with a professional internship in the marketing department and, after joining
-            the staff, took full responsibility for the department. I currently work in both design and marketing
-            management for the company.
+    reveals.forEach(reveal => {
+      const elementTop = reveal.getBoundingClientRect().top;
+      const elementVisible = windowHeight > 800 ? 100 : 50;
 
-            My duties include creating visual content (social media posts, posters, flyers, packaging) for the brands
-            Neutura and the online supermarket Até Ti (Dalifal), as well as Penela Center, Minipreço Penela, and Box
-            Renting (Nutrimpor).
+      if (elementTop < windowHeight - elementVisible) {
+        reveal.classList.add("active");
+      }
+    });
+  }
 
-            I manage the social media accounts of Até Ti, Neutura, and Bonini Portugal, including planning, content
-            creation, copywriting, and scheduling.
+  window.addEventListener("scroll", revealElements, { passive: true });
+  revealElements();
 
-            I also develop email marketing campaigns for Até Ti, focusing on promotions, product launches, and customer
-            retention. Additionally, I update and maintain the Até Ti website, editing product images and creating
-            banners for promotional campaigns. </p>
+  // ==========================================
+  // 2. PERFORMANCE: INTERSECTION OBSERVER
+  // ==========================================
+  // Isto deteta quando o Canvas do Herói sai do ecrã para pausar as animações pesadas.
+  let isHeroVisible = true;
+  const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      isHeroVisible = entry.isIntersecting;
+    });
+  }, { threshold: 0.05 });
 
-        <h2>TOOLS AND SKILLS</h2>
-        <div class="skillstools">
-
-            <ul>
-                <li>After Effects</li>
-                <li>Illustrator</li>
-                <li>InDesign</li>
-                <li>Photoshop</li>
-                <li>Figma</li>
-                <li>HTML/CSS</li>
-                <li>Javascript</li>
-                <li>WordPress</li>
-                <li>Mailchimp</li>
-            </ul>
-
-            <ul>
-                <li>Branding</li>
-                <li>Editorial Design</li>
-                <li>Graphic Design</li>
-                <li>Web Design</li>
-                <li>Photo and Video Editing</li>
-                <li>Email Marketing</li>
-                <li>Social Media Management</li>
-                <li>Data Visualization</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="work">
-        <h2>WORK</h2>
-        <p>A collection of works done during my time in Dalifal and some University projects.</p>
-
-        <div class="portfolio">
-            <div>
-                <a class="portfolio-item rectangle">
-                    <img src="Portfolio-01.png" alt="Sacos Neutura">
-                    <div class="overlay">
-                        <p>Embalagens Espetadas e Migas Neutura
-                            <br>
-                            <i style="font-size: 11px">(2024-Present)</i></p>
-                    </div>
-                </a>
-                <a class="portfolio-item rectangle" href="https://youtube.com/shorts/QAVC6E3Mtes?si=bvqWcfVXAo77pEUe" target="_blank">
-                    <img src="Portfolio-02.png" alt="Carrinha Neutura">
-                    <div class="overlay">
-                        <p>Carrinha Neutura
-                            <br>
-                            <i style="font-size: 11px">2025</i></p>
-                    </div>
-                </a>
-            </div>
-
-            <div>
-                <a class="portfolio-item square" href="https://www.facebook.com/Ateti.pt" target="_blank">
-                    <img src="Portfolio-03.png" alt="Até Ti"/>
-                    <div class="overlay">
-                        <p>Até Ti
-                            <br>
-                            <i style="font-size: 11px">(2023-Present)</i></p>
-                    </div>
-                </a>
-
-                <a class="portfolio-item square" href="https://www.facebook.com/Ateti.pt" target="_blank">
-                    <img src="Portfolio-04.png" alt="Até Ti"/>
-                    <div class="overlay">
-                        <p>Até Ti
-                            <br>
-                            <i style="font-size: 11px">(2023-Present)</i></p>
-                    </div>
-                </a>
-                <a class="portfolio-item square" href="https://www.facebook.com/Ateti.pt" target="_blank">
-                    <img src="Portfolio-05.png" alt="Até Ti"/>
-                    <div class="overlay">
-                        <p>Até Ti
-                            <br>
-                            <i style="font-size: 11px">(2023-Present)</i></p>
-                    </div>
-                </a>
-            </div>
-
-            <div>
-                <a class="portfolio-item square" href="https://www.facebook.com/penelacenter" target="_blank">
-                    <img src="Portfolio-06.png" alt="Penela Center"/>
-                    <div class="overlay">
-                        <p>Penela Center
-                            <br>
-                            <i style="font-size: 11px">(2023-Present)</i></p>
-                    </div>
-                </a>
-                <a class="portfolio-item square" href="https://www.facebook.com/miniprecopenela" target="_blank">
-                    <img src="Portfolio-07.png" alt="Minipreço Penela"/>
-                    <div class="overlay">
-                        <p>Minipreço Penela
-                            <br>
-                            <i style="font-size: 11px">(2023-Present)</i></p>
-                    </div>
-                </a>
-                <a class="portfolio-item square" href="https://www.facebook.com/in.out.BoxRenting" target="_blank">
-                    <img src="Portfolio-08.png" alt="Box Renting"/>
-                    <div class="overlay">
-                        <p>Box Renting
-                            <br>
-                            <i style="font-size: 11px">(2023-Present)</i></p>
-                    </div>
-                </a>
-
-            </div>
-
-            <div>
-                <a class="portfolio-item square" href="https://drive.google.com/file/d/1-MNtU2jg28soauneEN1vkpZhFIp_Iv0d/view?usp=sharing" target="_blank">
-                    <img src="Portfolio-10.png" alt="Marketing"/>
-                    <div class="overlay">
-                        <p>Marketing and Digital Communication
-                            <br>
-                            <i style="font-size: 11px">(2021)</i></p>
-                    </div>
-                </a>
-                <a class="portfolio-item square" href="https://student.dei.uc.pt/~pchurro/minorities_in_design/" target="_blank">
-                    <img src="Portfolio-09.png" alt="Data Viz"/>
-                    <div class="overlay">
-                        <p>Data Visualization
-                            <br>
-                            <i style="font-size: 11px">(2021)</i></p>
-                    </div>
-                </a>
-                <a class="portfolio-item square" href="https://drive.google.com/file/d/1tWXPrT0QFhSi0OZ80aew3U6y_mlxhz2H/view?usp=sharing" target="_blank">
-                    <img src="Portfolio-11.png" alt="Existências"/>
-                    <div class="overlay">
-                        <p>Audiovisual Communication
-                            <br>
-                            <i style="font-size: 11px">(2019)</i></p>
-                    </div>
-                </a>
-            </div>
+  const heroImageWrapper = document.getElementById('hero-image-wrapper');
+  if(heroImageWrapper) heroObserver.observe(heroImageWrapper);
 
 
-        </div>
-    </section>
+  // ==========================================
+  // 3. FUNDO HALFTONE INTERATIVO
+  // ==========================================
+  const bgCanvas = document.getElementById('halftone-canvas');
+  const bgCtx = bgCanvas.getContext('2d', { alpha: false });
+  let bgWidth, bgHeight;
+  let bgMouse = {x: -1000, y: -1000};
+  let animationFrameBg;
 
-    <footer id="contact">
-        <h2>CONTACTS</h2>
-        <p>Let’s talk: luispfp07@gmail.com | <a href="https://www.linkedin.com/in/lpfpereira/" target="_blank">linkedin.com/in/lpfpereira/</a>
-        </p>
-    </footer>
-</div>
+  function resizeBgCanvas() {
+    bgWidth = window.innerWidth;
+    bgHeight = window.innerHeight;
+    bgCanvas.width = bgWidth;
+    bgCanvas.height = bgHeight;
+  }
 
-<script src="script.js"></script>
+  window.addEventListener('resize', resizeBgCanvas, { passive: true });
+  resizeBgCanvas();
+
+  window.addEventListener('mousemove', (e) => {
+    bgMouse.x = e.clientX;
+    bgMouse.y = e.clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    bgMouse.x = e.touches[0].clientX;
+    bgMouse.y = e.touches[0].clientY;
+  }, { passive: true });
+
+  function animateBg() {
+    bgCtx.fillStyle = '#f9f9f9';
+    bgCtx.fillRect(0, 0, bgWidth, bgHeight);
+
+    const spacing = 16;
+    const effectRadius = 150;
+
+    for (let x = 0; x <= bgWidth; x += spacing) {
+      for (let y = 0; y <= bgHeight; y += spacing) {
+        let dx = bgMouse.x - x;
+        let dy = bgMouse.y - y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+
+        let radius = 1;
+        let blend = 0;
+
+        if (distance < effectRadius) {
+          let force = 1 - (distance / effectRadius);
+          radius = 1 + (5 * force);
+          blend = force;
+        }
+
+        if (blend > 0.1) {
+          let offset = 2 * blend;
+          let alpha = blend * 0.8;
+
+          bgCtx.beginPath(); bgCtx.arc(x - 2 * offset, y - 2 * offset, radius * 0.8, 0, Math.PI * 2); bgCtx.fillStyle = `rgba(0, 255, 255, ${alpha})`; bgCtx.fill();
+          bgCtx.beginPath(); bgCtx.arc(x + 2 * offset, y - 2 * offset, radius * 0.8, 0, Math.PI * 2); bgCtx.fillStyle = `rgba(255, 0, 255, ${alpha})`; bgCtx.fill();
+          bgCtx.beginPath(); bgCtx.arc(x,y + 2 * offset, radius * 0.8, 0, Math.PI * 2); bgCtx.fillStyle = `rgba(255, 230, 0, ${alpha})`; bgCtx.fill();
+          bgCtx.beginPath(); bgCtx.arc(x, y, radius, 0, Math.PI * 2); bgCtx.fillStyle = `rgba(5, 5, 5, ${1 - (blend * 0.99)})`; bgCtx.fill();
+        } else {
+          bgCtx.beginPath(); bgCtx.arc(x, y, radius, 0, Math.PI * 2); bgCtx.fillStyle = '#050505'; bgCtx.fill();
+        }
+      }
+    }
+    animationFrameBg = requestAnimationFrame(animateBg);
+  }
+
+  animateBg();
+
+  // ==========================================
+  // 4. FOTOGRAFIA INTERATIVA HALFTONE
+  // ==========================================
+  const profileCanvas = document.getElementById('profile-canvas');
+  const profileCtx = profileCanvas.getContext('2d');
+  let animationFrameProfile;
+
+  const img = new Image();
+  img.crossOrigin = "Anonymous";
+  img.src = 'luis.jpeg';
+
+  let particles = [];
+  let profileMouse = {x: -1000, y: -1000};
+
+  img.onload = () => {
+    const targetWidth = 540; // Reduzido para acompanhar os 90%
+    const targetHeight = Math.round(img.height * (targetWidth / img.width));
+
+    profileCanvas.width = targetWidth;
+    profileCanvas.height = targetHeight;
+
+    profileCtx.drawImage(img, 0, 0, targetWidth, targetHeight);
+    const imageData = profileCtx.getImageData(0, 0, targetWidth, targetHeight);
+    profileCtx.clearRect(0, 0, targetWidth, targetHeight);
+
+    const step = 3;
+
+    for (let y = 0; y < targetHeight; y += step) {
+      for (let x = 0; x < targetWidth; x += step) {
+        const index = (y * targetWidth + x) * 4;
+        const r = imageData.data[index];
+        const g = imageData.data[index + 1];
+        const b = imageData.data[index + 2];
+        const alpha = imageData.data[index + 3];
+
+        if (alpha > 200) {
+          const brightness = Math.sqrt(0.5 * r * r + 0.5 * g * g + 0.5 * b * b);
+          let baseRadius = ((255 - brightness) / 255) * (step / 1.2);
+          if (baseRadius < 0.1) baseRadius = 0.1;
+
+          particles.push({ x: x, y: y, baseRadius: baseRadius, currentRadius: baseRadius, blend: 0 });
+        }
+      }
+    }
+    animateProfile();
+  };
+
+  img.onerror = () => {
+    profileCanvas.style.display = 'none';
+    console.warn('A imagem luis.jpeg não foi encontrada.');
+  };
+
+  profileCanvas.addEventListener('mousemove', (e) => {
+    const rect = profileCanvas.getBoundingClientRect();
+    const scaleX = profileCanvas.width / rect.width;
+    const scaleY = profileCanvas.height / rect.height;
+
+    profileMouse.x = (e.clientX - rect.left) * scaleX;
+    profileMouse.y = (e.clientY - rect.top) * scaleY;
+  }, { passive: true });
+
+  profileCanvas.addEventListener('touchmove', (e) => {
+    const rect = profileCanvas.getBoundingClientRect();
+    const scaleX = profileCanvas.width / rect.width;
+    const scaleY = profileCanvas.height / rect.height;
+
+    profileMouse.x = (e.touches[0].clientX - rect.left) * scaleX;
+    profileMouse.y = (e.touches[0].clientY - rect.top) * scaleY;
+  }, { passive: true });
+
+  profileCanvas.addEventListener('mouseleave', () => { profileMouse.x = -1000; profileMouse.y = -1000; });
+  profileCanvas.addEventListener('touchend', () => { profileMouse.x = -1000; profileMouse.y = -1000; });
+
+  function animateProfile() {
+    // Se a Hero Section não estiver no ecrã (scroll down), não processamos os frames da imagem!
+    if (!isHeroVisible) {
+      animationFrameProfile = requestAnimationFrame(animateProfile);
+      return;
+    }
+
+    profileCtx.clearRect(0, 0, profileCanvas.width, profileCanvas.height);
+
+    const effectRadius = 150;
+    const maxExpansion = 0.2;
+
+    particles.forEach(p => {
+      let dx = profileMouse.x - p.x;
+      let dy = profileMouse.y - p.y;
+      let distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < effectRadius) {
+        let force = 1 - (distance / effectRadius);
+        let smoothForce = Math.pow(force, 0.85);
+
+        p.blend = smoothForce;
+        p.currentRadius = p.baseRadius * (1 + (maxExpansion * smoothForce));
+      } else {
+        p.blend *= 0.8;
+        p.currentRadius += (p.baseRadius - p.currentRadius) * 0.1;
+      }
+
+      if (p.blend > 0.02) {
+        let offset = 1.5 * p.blend;
+        let alpha = p.blend * 0.9;
+        let colorRadius = p.baseRadius * (1 + p.blend);
+
+        profileCtx.beginPath(); profileCtx.arc(p.x - 2*offset, p.y - 2*offset, colorRadius, 0, Math.PI * 2); profileCtx.fillStyle = `rgba(0, 255, 255, ${alpha})`; profileCtx.fill();
+        profileCtx.beginPath(); profileCtx.arc(p.x + 2*offset, p.y - 2*offset, colorRadius, 0, Math.PI * 2); profileCtx.fillStyle = `rgba(255, 0, 255, ${alpha})`; profileCtx.fill();
+        profileCtx.beginPath(); profileCtx.arc(p.x, p.y + 2*offset, colorRadius, 0, Math.PI * 2); profileCtx.fillStyle = `rgba(255, 230, 0, ${alpha})`; profileCtx.fill();
+
+        let blackAlpha = 1 - (p.blend * 0.5);
+        if (blackAlpha < 0) blackAlpha = 0;
+
+        if (blackAlpha > 0) {
+          profileCtx.beginPath(); profileCtx.arc(p.x, p.y, p.currentRadius, 0, Math.PI * 2); profileCtx.fillStyle = `rgba(5, 5, 5, ${blackAlpha})`; profileCtx.fill();
+        }
+      } else {
+        profileCtx.beginPath(); profileCtx.arc(p.x, p.y, p.currentRadius, 0, Math.PI * 2); profileCtx.fillStyle = '#000000'; profileCtx.fill();
+      }
+    });
+
+    animationFrameProfile = requestAnimationFrame(animateProfile);
+  }
+
+</script>
 </body>
 </html>
