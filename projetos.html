@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Projetos de Luís Pereira, Designer Multimédia.">
+  <title>Luís Pereira | Projects</title>
+  <style>
+    /* =========================================
+       ESTILOS BASE
+       ========================================= */
+    :root {
+      --black: #050505;
+      --white: #f9f9f9;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--white);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: var(--black);
+      overflow: hidden; /* Remove o scroll do body, vamos usar uma área específica */
+    }
+
+    .marcador {
+      background-color: var(--white);
+      display: inline;
+      box-shadow: 0.25em 0 0 var(--white), -0.25em 0 0 var(--white);
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+
+    /* =========================================
+       NAVEGAÇÃO (Agora FIXA no topo)
+       ========================================= */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 6vw;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      /* Ligeiro gradiente para a nav ser legível quando as fotos passam por trás */
+      background: linear-gradient(to bottom, rgba(249, 249, 249, 0.95) 0%, rgba(249, 249, 249, 0) 100%);
+    }
+
+    .logo {
+      font-size: clamp(1.3rem, 2.7vw, 1.8rem);
+      font-weight: 800;
+      text-transform: lowercase;
+      text-decoration: none;
+      color: var(--black);
+      letter-spacing: -2px;
+    }
+
+    .nav-links { display: flex; gap: clamp(1.3rem, 2.7vw, 2.7rem); flex-wrap: wrap; }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--black);
+      font-weight: 800;
+      text-transform: lowercase;
+      font-size: clamp(0.9rem, 1.35vw, 1.08rem);
+      letter-spacing: -1px;
+      transition: color 0.3s ease, transform 0.3s ease;
+      display: inline-block;
+      padding: 5px 0;
+    }
+
+    .nav-links a:focus-visible .marcador { background-color: var(--black); color: var(--white); box-shadow: 0.25em 0 0 var(--black), -0.25em 0 0 var(--black); }
+
+    /* ESTADO ATIVO: Pinta o marcador de preto */
+
+    .nav-links a.active .marcador {
+      background-color: var(--black);
+      color: var(--white);
+      box-shadow: 0.25em 0 0 var(--black), -0.25em 0 0 var(--black);
+    }
+
+    /* =========================================
+       GRELHA & SCROLL INFINITO (Página Principal)
+       ========================================= */
+    .main-scroll-area {
+      height: 100vh;
+      width: 100vw;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 120px 6vw 5vh 6vw; /* 120px em cima para compensar a nav fixa */
+      /* Esconde a barra de scroll */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .main-scroll-area::-webkit-scrollbar { display: none; }
+
+    .projetos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2vw;
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .projeto-item {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      cursor: pointer;
+      background-color: transparent;
+    }
+
+    .projeto-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(120%);
+      mix-blend-mode: multiply;
+      transition: filter 0.4s ease, mix-blend-mode 0.4s ease, transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+    }
+
+    .projeto-item:hover .projeto-thumb {
+      filter: grayscale(0%) contrast(100%);
+      mix-blend-mode: normal;
+      transform: scale(1.03);
+    }
+
+
+
+    /* =========================================
+       ESTILOS DO POP-UP (MODAL)
+       ========================================= */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--white);
+      z-index: 2000;
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .modal.active { opacity: 1; pointer-events: auto; }
+
+    .close-modal {
+      position: absolute;
+      top: 4vh;
+      right: 6vw;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      font-weight: 800;
+      cursor: pointer;
+      z-index: 2010;
+      text-transform: lowercase;
+    }
+
+    .close-modal:hover .marcador { background-color: var(--black); color: var(--white); }
+
+    .modal-left {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      padding: 6vw;
+      z-index: 2005;
+      pointer-events: none;
+    }
+
+    .modal-left h3 {
+      font-size: clamp(3rem, 6vw, 6rem);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      text-transform: lowercase;
+    }
+
+    .modal-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 6vw;
+      text-align: right;
+      z-index: 2005;
+      pointer-events: none;
+    }
+
+    .modal-right p {
+      font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+      max-width: 300px;
+      line-height: 1.4;
+      font-weight: bold;
+    }
+
+    .modal-center {
+      flex: 1.5;
+      height: 100%;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15vh 0;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .modal-center::-webkit-scrollbar { display: none; }
+
+    .scrollable-images { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 10vh; }
+    .scrollable-images img { width: 100%; height: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+    /* RESPONSIVO */
+    @media (max-width: 900px) {
+      nav { flex-direction: column; align-items: flex-start; gap: 15px; padding: 20px 6vw; background: rgba(249, 249, 249, 0.98); }
+      .main-scroll-area { padding-top: 150px; }
+      .projetos-grid { grid-template-columns: repeat(2, 1fr); }
+      .modal { flex-direction: column; display: block; overflow-y: auto; }
+      .modal-left, .modal-right { position: relative; padding: 20px; text-align: left; justify-content: flex-start; }
+      .modal-center { padding: 20px; height: auto; overflow: visible; }
+      .close-modal { top: 20px; right: 20px; }
+    }
+    @media (max-width: 500px) {
+      .projetos-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="halftone-canvas" aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
+
+<nav>
+  <a href="index.html" class="logo" aria-label="Voltar à página inicial"><span class="marcador">lp.</span></a>
+  <div class="nav-links">
+    <a href="index.html"><span class="marcador">about</span></a>
+    <a href="projetos.html" class="active"><span class="marcador">projects</span></a>
+    <a href="cv.html"><span class="marcador">cv</span></a>
+  </div>
+</nav>
+
+<div class="main-scroll-area" id="main-scroll-area">
+  <div class="projetos-grid" id="main-grid">
+
+    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=1,https://picsum.photos/800/800?random=2" onclick="abrirProjeto(this)">
+      <img src="https://picsum.photos/800/800?random=1" alt="Projeto 1" class="projeto-thumb">
+    </div>
+    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=3" onclick="abrirProjeto(this)">
+      <img src="https://picsum.photos/800/800?random=3" alt="Projeto 2" class="projeto-thumb">
+    </div>
+    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=4" onclick="abrirProjeto(this)">
+      <img src="https://picsum.photos/800/800?random=4" alt="Projeto 3" class="projeto-thumb">
+    </div>
+    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=5" onclick="abrirProjeto(this)">
+      <img src="https://picsum.photos/800/800?random=5" alt="Projeto 4" class="projeto-thumb">
+    </div>
+    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=6" onclick="abrirProjeto(this)">
+      <img src="https://picsum.photos/800/800?random=6" alt="Projeto 5" class="projeto-thumb">
+    </div>
+    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=7" onclick="abrirProjeto(this)">
+      <img src="https://picsum.photos/800/800?random=7" alt="Projeto 6" class="projeto-thumb">
+    </div>
+    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=8" onclick="abrirProjeto(this)">
+      <img src="https://picsum.photos/800/800?random=8" alt="Projeto 7" class="projeto-thumb">
+    </div>
+    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=9" onclick="abrirProjeto(this)">
+      <img src="https://picsum.photos/800/800?random=9" alt="Projeto 8" class="projeto-thumb">
+    </div>
+    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=10" onclick="abrirProjeto(this)">
+      <img src="https://picsum.photos/800/800?random=10" alt="Projeto 9" class="projeto-thumb">
+    </div>
+  </div>
+</div>
+
+<div id="projeto-modal" class="modal">
+  <button class="close-modal" onclick="fecharProjeto()" aria-label="Close project">
+    <span class="marcador">close [x]</span>
+  </button>
+  <div class="modal-left">
+    <h3 id="modal-title"><span>nome do projeto</span></h3>
+  </div>
+  <div class="modal-center" id="modal-scroll-area">
+    <div class="scrollable-images" id="modal-images"></div>
+  </div>
+  <div class="modal-right">
+    <p id="modal-desc"><span>detalhes do projeto aqui.</span></p>
+  </div>
+</div>
+
+<script>
+  // ==========================================
+  // FUNDO INTERATIVO (Halftone)
+  // ==========================================
+  const bgCanvas = document.getElementById('halftone-canvas');
+  const bgCtx = bgCanvas.getContext('2d', { alpha: false });
+  let bgWidth, bgHeight;
+  let bgMouse = {x: -1000, y: -1000};
+
+  function resizeBgCanvas() {
+    bgWidth = window.innerWidth;
+    bgHeight = window.innerHeight;
+    bgCanvas.width = bgWidth;
+    bgCanvas.height = bgHeight;
+  }
+  window.addEventListener('resize', resizeBgCanvas, { passive: true });
+  resizeBgCanvas();
+  window.addEventListener('mousemove', (e) => { bgMouse.x = e.clientX; bgMouse.y = e.clientY; }, { passive: true });
+  window.addEventListener('touchmove', (e) => { bgMouse.x = e.touches[0].clientX; bgMouse.y = e.touches[0].clientY; }, { passive: true });
+
+  function animateBg() {
+    bgCtx.fillStyle = '#f9f9f9';
+    bgCtx.fillRect(0, 0, bgWidth, bgHeight);
+    const spacing = 16;
+    const effectRadius = 150;
+
+    for (let x = 0; x <= bgWidth; x += spacing) {
+      for (let y = 0; y <= bgHeight; y += spacing) {
+        let dx = bgMouse.x - x;
+        let dy = bgMouse.y - y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        let radius = 1;
+        let blend = 0;
+
+        if (distance < effectRadius) {
+          let force = 1 - (distance / effectRadius);
+          radius = 1 + (5 * force);
+          blend = force;
+        }
+
+        if (blend > 0.1) {
+          let offset = 2 * blend;
+          let alpha = blend * 0.8;
+          bgCtx.beginPath(); bgCtx.arc(x - 2 * offset, y - 2 * offset, radius * 0.8, 0, Math.PI * 2); bgCtx.fillStyle = `rgba(0, 255, 255, ${alpha})`; bgCtx.fill();
+          bgCtx.beginPath(); bgCtx.arc(x + 2 * offset, y - 2 * offset, radius * 0.8, 0, Math.PI * 2); bgCtx.fillStyle = `rgba(255, 0, 255, ${alpha})`; bgCtx.fill();
+          bgCtx.beginPath(); bgCtx.arc(x,y + 2 * offset, radius * 0.8, 0, Math.PI * 2); bgCtx.fillStyle = `rgba(255, 230, 0, ${alpha})`; bgCtx.fill();
+          bgCtx.beginPath(); bgCtx.arc(x, y, radius, 0, Math.PI * 2); bgCtx.fillStyle = `rgba(5, 5, 5, ${1 - (blend * 0.99)})`; bgCtx.fill();
+        } else {
+          bgCtx.beginPath(); bgCtx.arc(x, y, radius, 0, Math.PI * 2); bgCtx.fillStyle = '#050505'; bgCtx.fill();
+        }
+      }
+    }
+    requestAnimationFrame(animateBg);
+  }
+  animateBg();
+
+  // ==========================================
+  // SCROLL INFINITO DA GRELHA PRINCIPAL
+  // ==========================================
+  const mainScrollArea = document.getElementById('main-scroll-area');
+  const mainGrid = document.getElementById('main-grid');
+
+  // Guardamos o conteúdo inicial dos 9 projetos para ir clonando
+  const originalGridContent = mainGrid.innerHTML;
+
+  mainScrollArea.addEventListener('scroll', () => {
+    // Se o scroll chegar perto do fundo (margem de 300px)
+    if (mainScrollArea.scrollTop + mainScrollArea.clientHeight >= mainScrollArea.scrollHeight - 300) {
+      // Injeta os mesmos 9 projetos no fim da grelha, criando o loop infinito
+      mainGrid.insertAdjacentHTML('beforeend', originalGridContent);
+    }
+  }, { passive: true });
+
+
+  // ==========================================
+  // LÓGICA DO POP-UP E SCROLL INFINITO (MODAL)
+  // ==========================================
+  const modal = document.getElementById('projeto-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalDesc = document.getElementById('modal-desc');
+  const modalImages = document.getElementById('modal-images');
+  const modalScrollArea = document.getElementById('modal-scroll-area');
+
+  function abrirProjeto(elemento) {
+    const titulo = elemento.getAttribute('data-title');
+    const desc = elemento.getAttribute('data-desc');
+    const imagensStrings = elemento.getAttribute('data-imgs');
+    const imagensArray = imagensStrings.split(',');
+
+    modalTitle.innerHTML = `<span class="marcador">${titulo}</span>`;
+    modalDesc.innerHTML = `<span class="marcador">${desc}</span>`;
+
+    modalImages.innerHTML = '';
+    imagensArray.forEach(url => {
+      const img = document.createElement('img');
+      img.src = url.trim();
+      modalImages.appendChild(img);
+    });
+
+    modalScrollArea.scrollTop = 0;
+    modal.classList.add('active');
+  }
+
+  function fecharProjeto() {
+    modal.classList.remove('active');
+  }
+
+  // Scroll Infinito dentro da Modal
+  modalScrollArea.addEventListener('scroll', () => {
+    if (modalScrollArea.scrollTop + modalScrollArea.clientHeight >= modalScrollArea.scrollHeight - 100) {
+      const conteudoAtual = modalImages.innerHTML;
+      modalImages.innerHTML += conteudoAtual;
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>

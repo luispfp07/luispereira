@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portefólio de Luís Pereira, Designer Multimédia.">
+    <title>Luís Pereira | CV</title>
+    <style>
+        /* RESET & VARIÁVEIS */
+        :root {
+            --black: #050505;
+            --white: #f9f9f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        /* FUNDO BASE */
+        body {
+            background-color: var(--white);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: var(--black);
+            overflow-x: hidden;
+        }
+
+        /* CLASSE UTILITÁRIA: EFEITO MARCADOR BRUTALISTA */
+        .marcador {
+            background-color: var(--white);
+            display: inline;
+            box-shadow: 0.25em 0 0 var(--white), -0.25em 0 0 var(--white);
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+        }
+
+        /* ENVOLVENTE PRINCIPAL - ESCALA 90% */
+        .site-wrapper {
+            width: 100%;
+            max-width: 1440px; /* Reduzido de 1600px */
+            margin: 0 auto;
+            padding: 0 6vw; /* Ligeiramente mais margem para dar o efeito de zoom out */
+            position: relative;
+        }
+
+        /* NAVEGAÇÃO */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 6vw;
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            /* Ligeiro gradiente para a nav ser legível quando as fotos passam por trás */
+            background: linear-gradient(to bottom, rgba(249, 249, 249, 0.95) 0%, rgba(249, 249, 249, 0) 100%);
+        }
+
+        /* ESTADO ATIVO: Pinta o marcador de preto */
+
+        .nav-links a.active .marcador {
+            background-color: var(--black);
+            color: var(--white);
+            box-shadow: 0.25em 0 0 var(--black), -0.25em 0 0 var(--black);
+        }
+
+        .logo {
+            font-size: clamp(1.3rem, 2.7vw, 1.8rem); /* Reduzido 10% */
+            font-weight: 800;
+            text-transform: lowercase;
+            text-decoration: none;
+            color: var(--black);
+            letter-spacing: -2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: clamp(1.3rem, 2.7vw, 2.7rem);
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 800;
+            text-transform: lowercase;
+            font-size: clamp(0.9rem, 1.35vw, 1.08rem); /* Reduzido 10% */
+            letter-spacing: -1px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus-visible {
+            color: #666;
+            outline: none;
+        }
+
+        .nav-links a:focus-visible .marcador {
+            background-color: var(--black);
+            color: var(--white);
+            box-shadow: 0.25em 0 0 var(--black), -0.25em 0 0 var(--black);
+        }
+
+        .hero-text h1 {
+            font-size: clamp(3.6rem, 10.8vw, 10.8rem); /* Reduzido 10% */
+            line-height: 1.1;
+            letter-spacing: -0.06em;
+            text-transform: lowercase;
+            margin-bottom: 4vh;
+            word-wrap: break-word;
+        }
+
+        .hero-text h2 {
+            font-size: clamp(1.08rem, 2.7vw, 2.25rem); /* Reduzido 10% */
+            line-height: 1.4;
+            text-transform: lowercase;
+            font-weight: bold;
+            letter-spacing: -0.02em;
+            max-width: 540px;
+        }
+
+        /* SECÇÕES GERAIS */
+        section {
+            padding: 9vh 0; /* Reduzido de 10vh */
+        }
+
+        .about-text p {
+            margin-bottom: 1.5em;
+            line-height: 1.6;
+        }
+
+        .skills-list li {
+            font-size: clamp(1.6rem, 2.7vw, 2.25rem); /* Reduzido 10% */
+            font-weight: 800;
+            text-transform: lowercase;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            color: var(--black);
+            opacity: 0.8;
+            transition: opacity 0.3s, transform 0.3s;
+            cursor: default;
+            display: inline-block;
+        }
+
+        .skills-list li:hover {
+            opacity: 1;
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        /* ==========================================
+           ESTILOS DO DISPLAY DE PDF E BOTÃO DE DOWNLOAD
+           ========================================== */
+
+        .cv-display-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5vh 0;
+        }
+
+        .pdf-container {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 210 / 297; /* Define a proporção exata do formato A4 */
+            margin: 4vh 0;
+            background-color: var(--white);
+            overflow: hidden;
+        }
+
+
+
+        .pdf-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .download-container {
+            margin-top: 5vh;
+            text-align: center;
+        }
+
+        .btn-download {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 800;
+            text-transform: lowercase;
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            letter-spacing: -1px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-download .marcador {
+            padding: 10px 24px;
+            border: 3px solid var(--black);
+            transition: all 0.3s ease;
+        }
+
+
+        .btn-download:hover .marcador {
+            background-color: var(--black);
+            color: var(--white);
+            box-shadow: 0.25em 0 0 var(--black), -0.25em 0 0 var(--black);
+        }
+
+        /* FOOTER / CONTACTOS */
+        footer {
+            padding: 13vh 0; /* Reduzido de 15vh */
+            background-color: transparent;
+            color: var(--black);
+            text-align: left;
+        }
+
+        footer h2 {
+            font-size: clamp(2.7rem, 7.2vw, 7.2rem); /* Reduzido 10% */
+            text-transform: lowercase;
+            letter-spacing: -0.05em;
+            line-height: 1.05;
+            margin-bottom: 5vh;
+        }
+
+        .social-links a {
+            color: var(--black);
+            text-decoration: none;
+            text-transform: lowercase;
+            font-size: clamp(1.08rem, 1.35vw, 1.35rem); /* Reduzido 10% */
+            font-weight: bold;
+            letter-spacing: -1px;
+            padding: 5px 0;
+        }
+
+        .social-links a:hover {
+            text-decoration: line-through;
+        }
+
+        /* RESPONSIVO MOBILE */
+        @media (max-width: 900px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+                padding: 20px 0;
+                background: rgba(249, 249, 249, 0.95);
+            }
+
+            .hero-text h1 {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="halftone-canvas" aria-hidden="true"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
+
+<div class="site-wrapper">
+
+    <nav>
+        <a href="index.html" class="logo" aria-label="Voltar à página inicial"><span class="marcador">lp.</span></a>
+        <div class="nav-links">
+            <a href="index.html"><span class="marcador">about</span></a>
+            <a href="projetos.html"><span class="marcador">projects</span></a>
+            <a href="cv.html" class="active"><span class="marcador">cv</span></a>
+        </div>
+    </nav>
+
+    <!-- SECÇÃO DO CV (PDF + Botão) -->
+    <section class="cv-display-section">
+
+
+        <!-- Contentor do PDF -->
+        <div class="pdf-container">
+            <!-- SUBSTITUI "teu-cv.pdf" PELO NOME DO TEU FICHEIRO -->
+            <iframe src="resume.pdf#toolbar=0" title="CV Luís Pereira">
+                O teu browser não suporta a visualização de PDFs. Por favor, faz o download abaixo.
+            </iframe>
+        </div>
+
+        <!-- Botão de Download -->
+        <div class="download-container">
+            <!-- SUBSTITUI "teu-cv.pdf" PELO NOME DO TEU FICHEIRO -->
+            <a href="resume.pdf" download="Luís Pereira - Resumé.pdf" class="btn-download">
+                <span class="marcador" style="border: none">download</span>
+            </a>
+        </div>
+    </section>
+
+</div>
+
+<script>
+
+    // ==========================================
+    // 3. FUNDO HALFTONE INTERATIVO
+    // ==========================================
+    const bgCanvas = document.getElementById('halftone-canvas');
+    const bgCtx = bgCanvas.getContext('2d', { alpha: false });
+    let bgWidth, bgHeight;
+    let bgMouse = {x: -1000, y: -1000};
+    let animationFrameBg;
+
+    function resizeBgCanvas() {
+        bgWidth = window.innerWidth;
+        bgHeight = window.innerHeight;
+        bgCanvas.width = bgWidth;
+        bgCanvas.height = bgHeight;
+    }
+
+    window.addEventListener('resize', resizeBgCanvas, { passive: true });
+    resizeBgCanvas();
+
+    window.addEventListener('mousemove', (e) => {
+        bgMouse.x = e.clientX;
+        bgMouse.y = e.clientY;
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+        bgMouse.x = e.touches[0].clientX;
+        bgMouse.y = e.touches[0].clientY;
+    }, { passive: true });
+
+    function animateBg() {
+        bgCtx.fillStyle = '#f9f9f9';
+        bgCtx.fillRect(0, 0, bgWidth, bgHeight);
+
+        const spacing = 16;
+        const effectRadius = 150;
+
+        for (let x = 0; x <= bgWidth; x += spacing) {
+            for (let y = 0; y <= bgHeight; y += spacing) {
+                let dx = bgMouse.x - x;
+                let dy = bgMouse.y - y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+
+                let radius = 1;
+                let blend = 0;
+
+                if (distance < effectRadius) {
+                    let force = 1 - (distance / effectRadius);
+                    radius = 1 + (5 * force);
+                    blend = force;
+                }
+
+                if (blend > 0.1) {
+                    let offset = 2 * blend;
+                    let alpha = blend * 0.8;
+
+                    bgCtx.beginPath(); bgCtx.arc(x - 2 * offset, y - 2 * offset, radius * 0.8, 0, Math.PI * 2); bgCtx.fillStyle = `rgba(0, 255, 255, ${alpha})`; bgCtx.fill();
+                    bgCtx.beginPath(); bgCtx.arc(x + 2 * offset, y - 2 * offset, radius * 0.8, 0, Math.PI * 2); bgCtx.fillStyle = `rgba(255, 0, 255, ${alpha})`; bgCtx.fill();
+                    bgCtx.beginPath(); bgCtx.arc(x,y + 2 * offset, radius * 0.8, 0, Math.PI * 2); bgCtx.fillStyle = `rgba(255, 230, 0, ${alpha})`; bgCtx.fill();
+                    bgCtx.beginPath(); bgCtx.arc(x, y, radius, 0, Math.PI * 2); bgCtx.fillStyle = `rgba(5, 5, 5, ${1 - (blend * 0.99)})`; bgCtx.fill();
+                } else {
+                    bgCtx.beginPath(); bgCtx.arc(x, y, radius, 0, Math.PI * 2); bgCtx.fillStyle = '#050505'; bgCtx.fill();
+                }
+            }
+        }
+        animationFrameBg = requestAnimationFrame(animateBg);
+    }
+
+    animateBg();
+
+    // ==========================================
+    // 4. FOTOGRAFIA INTERATIVA HALFTONE
+    // ==========================================
+    const profileCanvas = document.getElementById('profile-canvas');
+    if (profileCanvas) {
+        const profileCtx = profileCanvas.getContext('2d');
+        let animationFrameProfile;
+
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.src = 'luis.jpeg';
+
+        let particles = [];
+        let profileMouse = {x: -1000, y: -1000};
+
+        img.onload = () => {
+            const targetWidth = 540; // Reduzido para acompanhar os 90%
+            const targetHeight = Math.round(img.height * (targetWidth / img.width));
+
+            profileCanvas.width = targetWidth;
+            profileCanvas.height = targetHeight;
+
+            profileCtx.drawImage(img, 0, 0, targetWidth, targetHeight);
+            const imageData = profileCtx.getImageData(0, 0, targetWidth, targetHeight);
+            profileCtx.clearRect(0, 0, targetWidth, targetHeight);
+
+            const step = 3;
+
+            for (let y = 0; y < targetHeight; y += step) {
+                for (let x = 0; x < targetWidth; x += step) {
+                    const index = (y * targetWidth + x) * 4;
+                    const r = imageData.data[index];
+                    const g = imageData.data[index + 1];
+                    const b = imageData.data[index + 2];
+                    const alpha = imageData.data[index + 3];
+
+                    if (alpha > 200) {
+                        const brightness = Math.sqrt(0.5 * r * r + 0.5 * g * g + 0.5 * b * b);
+                        let baseRadius = ((255 - brightness) / 255) * (step / 1.2);
+                        if (baseRadius < 0.1) baseRadius = 0.1;
+
+                        particles.push({ x: x, y: y, baseRadius: baseRadius, currentRadius: baseRadius, blend: 0 });
+                    }
+                }
+            }
+            animateProfile();
+        };
+
+        img.onerror = () => {
+            profileCanvas.style.display = 'none';
+            console.warn('A imagem luis.jpeg não foi encontrada.');
+        };
+
+        profileCanvas.addEventListener('mousemove', (e) => {
+            const rect = profileCanvas.getBoundingClientRect();
+            const scaleX = profileCanvas.width / rect.width;
+            const scaleY = profileCanvas.height / rect.height;
+
+            profileMouse.x = (e.clientX - rect.left) * scaleX;
+            profileMouse.y = (e.clientY - rect.top) * scaleY;
+        }, { passive: true });
+
+        profileCanvas.addEventListener('touchmove', (e) => {
+            const rect = profileCanvas.getBoundingClientRect();
+            const scaleX = profileCanvas.width / rect.width;
+            const scaleY = profileCanvas.height / rect.height;
+
+            profileMouse.x = (e.touches[0].clientX - rect.left) * scaleX;
+            profileMouse.y = (e.touches[0].clientY - rect.top) * scaleY;
+        }, { passive: true });
+
+        profileCanvas.addEventListener('mouseleave', () => { profileMouse.x = -1000; profileMouse.y = -1000; });
+        profileCanvas.addEventListener('touchend', () => { profileMouse.x = -1000; profileMouse.y = -1000; });
+
+        function animateProfile() {
+            // Se a Hero Section não estiver no ecrã (scroll down), não processamos os frames da imagem!
+            if (typeof isHeroVisible !== 'undefined' && !isHeroVisible) {
+                animationFrameProfile = requestAnimationFrame(animateProfile);
+                return;
+            }
+
+            profileCtx.clearRect(0, 0, profileCanvas.width, profileCanvas.height);
+
+            const effectRadius = 150;
+            const maxExpansion = 0.2;
+
+            particles.forEach(p => {
+                let dx = profileMouse.x - p.x;
+                let dy = profileMouse.y - p.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < effectRadius) {
+                    let force = 1 - (distance / effectRadius);
+                    let smoothForce = Math.pow(force, 0.85);
+
+                    p.blend = smoothForce;
+                    p.currentRadius = p.baseRadius * (1 + (maxExpansion * smoothForce));
+                } else {
+                    p.blend *= 0.8;
+                    p.currentRadius += (p.baseRadius - p.currentRadius) * 0.1;
+                }
+
+                if (p.blend > 0.02) {
+                    let offset = 1.5 * p.blend;
+                    let alpha = p.blend * 0.9;
+                    let colorRadius = p.baseRadius * (1 + p.blend);
+
+                    profileCtx.beginPath(); profileCtx.arc(p.x - 2*offset, p.y - 2*offset, colorRadius, 0, Math.PI * 2); profileCtx.fillStyle = `rgba(0, 255, 255, ${alpha})`; profileCtx.fill();
+                    profileCtx.beginPath(); profileCtx.arc(p.x + 2*offset, p.y - 2*offset, colorRadius, 0, Math.PI * 2); profileCtx.fillStyle = `rgba(255, 0, 255, ${alpha})`; profileCtx.fill();
+                    profileCtx.beginPath(); profileCtx.arc(p.x, p.y + 2*offset, colorRadius, 0, Math.PI * 2); profileCtx.fillStyle = `rgba(255, 230, 0, ${alpha})`; profileCtx.fill();
+
+                    let blackAlpha = 1 - (p.blend * 0.5);
+                    if (blackAlpha < 0) blackAlpha = 0;
+
+                    if (blackAlpha > 0) {
+                        profileCtx.beginPath(); profileCtx.arc(p.x, p.y, p.currentRadius, 0, Math.PI * 2); profileCtx.fillStyle = `rgba(5, 5, 5, ${blackAlpha})`; profileCtx.fill();
+                    }
+                } else {
+                    profileCtx.beginPath(); profileCtx.arc(p.x, p.y, p.currentRadius, 0, Math.PI * 2); profileCtx.fillStyle = '#000000'; profileCtx.fill();
+                }
+            });
+
+            animationFrameProfile = requestAnimationFrame(animateProfile);
+        }
+    }
+</script>
+</body>
+</html>
