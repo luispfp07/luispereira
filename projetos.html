@@ -177,8 +177,8 @@
     }
 
     .modal-left h3 {
-      font-size: clamp(3rem, 6vw, 6rem);
-      line-height: 0.9;
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 1.2;
       letter-spacing: -0.05em;
       text-transform: lowercase;
     }
@@ -191,14 +191,28 @@
       padding: 6vw;
       text-align: right;
       z-index: 2005;
-      pointer-events: none;
     }
 
     .modal-right p {
       font-size: clamp(1.1rem, 1.5vw, 1.5rem);
       max-width: 300px;
-      line-height: 1.4;
+      line-height: 1.6;
       font-weight: bold;
+    }
+
+    .modal-right p a {
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 4px; /* Afasta um bocadinho a linha da palavra */
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.active .modal-right p {
+      pointer-events: auto;
+    }
+
+    .modal-right p a:hover {
+      opacity: 0.5; /* Fica ligeiramente transparente ao passar o rato */
     }
 
     .modal-center {
@@ -214,7 +228,12 @@
     }
     .modal-center::-webkit-scrollbar { display: none; }
 
-    .scrollable-images { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 10vh; }
+    .scrollable-images img, .scrollable-images video {
+      width: 100%;
+      height: auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      display: block;
+    }
     .scrollable-images img { width: 100%; height: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
 
     /* RESPONSIVO */
@@ -248,32 +267,23 @@
 <div class="main-scroll-area" id="main-scroll-area">
   <div class="projetos-grid" id="main-grid">
 
-    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=1,https://picsum.photos/800/800?random=2" onclick="abrirProjeto(this)">
-      <img src="https://picsum.photos/800/800?random=1" alt="Projeto 1" class="projeto-thumb">
+    <div class="projeto-item" data-title="flyer neutura" data-desc="Flyer used at Sagal 26 used to promote Neutura products." data-imgs="desdobravel%203.png,desdobravel%201.png,desdobravel%202.png,desdobravel%204.png" onclick="abrirProjeto(this)">
+      <img src="desdobravel%203.png" alt="Projeto 1" class="projeto-thumb">
     </div>
-    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=3" onclick="abrirProjeto(this)">
-      <img src="https://picsum.photos/800/800?random=3" alt="Projeto 2" class="projeto-thumb">
+    <div class="projeto-item" data-title="neutura truck" data-desc="Neutura truck decoration." data-imgs="carrinha1.png,carrinha2.png,carrinha3.png,carrinha4.png,carrinha.gif" onclick="abrirProjeto(this)">
+      <img src="carrinha.gif" alt="Projeto 3" class="projeto-thumb">
     </div>
-    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=4" onclick="abrirProjeto(this)">
-      <img src="https://picsum.photos/800/800?random=4" alt="Projeto 3" class="projeto-thumb">
+    <div class="projeto-item" data-title="packaging neutura" data-desc="Packaging done for the new Neutura products.<br><br>Skewers, Mash, Rolls." data-imgs="espetadafba.png,espetadafpc.png,espetadapbp.png,migascb.png,migasrcb.png,rolos.png" onclick="abrirProjeto(this)">
+      <img src="espetadas.jpg" alt="Projeto 4" class="projeto-thumb">
     </div>
-    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=5" onclick="abrirProjeto(this)">
-      <img src="https://picsum.photos/800/800?random=5" alt="Projeto 4" class="projeto-thumb">
+    <div class="projeto-item" data-title="data visualization minorities in design" data-desc="The website comprises a visualization of the Design Census 2019 dataset using an implementation of a Sankey Diagram, aiming to explore the success of Minorities in the design industry. <br><br> <a href='https://student.dei.uc.pt/~pchurro/minorities_in_design/' target='_blank'>View website.</a>" data-imgs="dataviz.png" onclick="abrirProjeto(this)">
+      <img src="dataviz.png" alt="Projeto 5" class="projeto-thumb">
     </div>
-    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=6" onclick="abrirProjeto(this)">
-      <img src="https://picsum.photos/800/800?random=6" alt="Projeto 5" class="projeto-thumb">
+    <div class="projeto-item" data-title="audiovisual project existências" data-desc="A group project where the goal was to make a publicity and promotional film. <br><br> Existências is a non-profit social solidarity association, based in Coimbra, whose main objectives are social intervention and the promotion and protection of health, namely through the development of social integration and the provision of preventive, curative and rehabilitative care." data-imgs="existencias.mp4" onclick="abrirProjeto(this)">
+      <img src="existenciasthumb.gif" alt="Projeto 6" class="projeto-thumb">
     </div>
-    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=7" onclick="abrirProjeto(this)">
-      <img src="https://picsum.photos/800/800?random=7" alt="Projeto 6" class="projeto-thumb">
-    </div>
-    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=8" onclick="abrirProjeto(this)">
-      <img src="https://picsum.photos/800/800?random=8" alt="Projeto 7" class="projeto-thumb">
-    </div>
-    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=9" onclick="abrirProjeto(this)">
-      <img src="https://picsum.photos/800/800?random=9" alt="Projeto 8" class="projeto-thumb">
-    </div>
-    <div class="projeto-item" data-title="TBD" data-desc="under construction" data-imgs="https://picsum.photos/800/800?random=10" onclick="abrirProjeto(this)">
-      <img src="https://picsum.photos/800/800?random=10" alt="Projeto 9" class="projeto-thumb">
+    <div class="projeto-item" data-title="a day in dei" data-desc="We were tasked with creating a video highlighting the Department of Informatics Engineering (DEI) with the intent of it being apart of a social media campaign to promote it.<br><br>The concept for the video was inspired by a TikTok trend which consisted of taking the head of a person and overlaying it on top of different videos depicting different scenarios." data-imgs="dayindei.mp4" onclick="abrirProjeto(this)">
+      <img src="dayindei.png" alt="Projeto 7" class="projeto-thumb">
     </div>
   </div>
 </div>
@@ -387,9 +397,27 @@
 
     modalImages.innerHTML = '';
     imagensArray.forEach(url => {
-      const img = document.createElement('img');
-      img.src = url.trim();
-      modalImages.appendChild(img);
+      const urlLimpo = url.trim();
+
+      // Verifica se o ficheiro termina em .mp4 ou .webm (Vídeo)
+      if (urlLimpo.toLowerCase().endsWith('.mp4') || urlLimpo.toLowerCase().endsWith('.webm')) {
+        const video = document.createElement('video');
+        video.src = urlLimpo;
+
+        // Atributos do vídeo
+        video.setAttribute('controls', ''); // <-- É ESTA LINHA QUE ADICIONA OS COMANDOS
+        video.setAttribute('autoplay', '');
+        video.setAttribute('loop', '');
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', '');
+
+        modalImages.appendChild(video);
+      } else {
+        // Se não for vídeo, cria uma imagem normal
+        const img = document.createElement('img');
+        img.src = urlLimpo;
+        modalImages.appendChild(img);
+      }
     });
 
     modalScrollArea.scrollTop = 0;
