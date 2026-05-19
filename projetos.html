@@ -228,11 +228,23 @@
     }
     .modal-center::-webkit-scrollbar { display: none; }
 
-    .scrollable-images img, .scrollable-images video {
+    /* Imagens mantêm o comportamento normal */
+    .scrollable-images img {
       width: 100%;
       height: auto;
       box-shadow: 0 20px 40px rgba(0,0,0,0.1);
       display: block;
+    }
+
+    /* Vídeos com altura máxima para não saírem do ecrã e ficarem centrados */
+    .scrollable-images video {
+      width: 100%;
+      max-height: 75vh; /* Ocupa no máximo 75% da altura da tela */
+      object-fit: contain; /* Garante que o vídeo não é cortado e fica centrado na sua área */
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      display: block;
+      margin: 0 auto; /* Ajuda a centrar horizontalmente */
+      background-color: var(--white); /* Evita margens pretas em vídeos de proporções diferentes */
     }
     .scrollable-images img { width: 100%; height: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
 
@@ -386,6 +398,9 @@
   const modalImages = document.getElementById('modal-images');
   const modalScrollArea = document.getElementById('modal-scroll-area');
 
+  // 1. Criamos a variável que vai controlar se há vídeo
+  let projetoTemVideo = false;
+
   function abrirProjeto(elemento) {
     const titulo = elemento.getAttribute('data-title');
     const desc = elemento.getAttribute('data-desc');
@@ -394,26 +409,27 @@
 
     modalTitle.innerHTML = `<span class="marcador">${titulo}</span>`;
     modalDesc.innerHTML = `<span class="marcador">${desc}</span>`;
-
     modalImages.innerHTML = '';
+
+    // Reset da variável sempre que abres um projeto novo
+    projetoTemVideo = false;
+
     imagensArray.forEach(url => {
       const urlLimpo = url.trim();
 
-      // Verifica se o ficheiro termina em .mp4 ou .webm (Vídeo)
       if (urlLimpo.toLowerCase().endsWith('.mp4') || urlLimpo.toLowerCase().endsWith('.webm')) {
+        // Encontrou um vídeo! Ativa o nosso interruptor
+        projetoTemVideo = true;
+
         const video = document.createElement('video');
         video.src = urlLimpo;
-
-        // Atributos do vídeo
-        video.setAttribute('controls', ''); // <-- É ESTA LINHA QUE ADICIONA OS COMANDOS
+        video.setAttribute('controls', '');
         video.setAttribute('autoplay', '');
         video.setAttribute('loop', '');
         video.setAttribute('muted', '');
         video.setAttribute('playsinline', '');
-
         modalImages.appendChild(video);
       } else {
-        // Se não for vídeo, cria uma imagem normal
         const img = document.createElement('img');
         img.src = urlLimpo;
         modalImages.appendChild(img);
@@ -426,10 +442,17 @@
 
   function fecharProjeto() {
     modal.classList.remove('active');
+
+    // Pausa os vídeos quando fechas a modal, para o som não continuar a dar ao fundo
+    const videos = modalImages.querySelectorAll('video');
+    videos.forEach(vid => vid.pause());
   }
 
-  // Scroll Infinito dentro da Modal
+  // 2. O Scroll Infinito agora respeita o interruptor
   modalScrollArea.addEventListener('scroll', () => {
+    // SE houver um vídeo neste projeto, a função "return" cancela o scroll infinito!
+    if (projetoTemVideo) return;
+
     if (modalScrollArea.scrollTop + modalScrollArea.clientHeight >= modalScrollArea.scrollHeight - 100) {
       const conteudoAtual = modalImages.innerHTML;
       modalImages.innerHTML += conteudoAtual;
