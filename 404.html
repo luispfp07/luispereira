@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found | Luís Pereira</title>
+  <meta name="robots" content="noindex">
+  <!-- Caminhos absolutos: esta página pode ser mostrada em qualquer URL do site -->
+  <link rel="icon" href="/luispereira/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700;800&display=swap">
+  <link rel="stylesheet" href="/luispereira/style.css">
+  <style>
+    .not-found { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; gap: 4vh; }
+    .not-found h1 { font-size: clamp(5rem, 20vw, 16rem); letter-spacing: -0.08em; line-height: 1; }
+    .not-found p { font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 800; text-transform: lowercase; letter-spacing: -0.04em; }
+  </style>
+</head>
+<body>
+<canvas id="halftone-canvas" aria-hidden="true"></canvas>
+
+<header class="site-nav">
+  <nav class="inner" aria-label="Main">
+    <a href="/luispereira/" class="logo" aria-label="Luís Pereira, home"><span class="marcador">lp.</span></a>
+    <ul class="nav-links">
+      <li><a href="/luispereira/#about"><span class="marcador">about</span></a></li>
+      <li><a href="/luispereira/projetos.html"><span class="marcador">projects</span></a></li>
+      <li><a href="/luispereira/cv.html"><span class="marcador">cv</span></a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="site-wrapper">
+  <main id="main" class="not-found">
+    <h1><span class="marcador">404</span></h1>
+    <p><span class="marcador">this page doesn't exist (anymore).</span></p>
+    <div><a href="/luispereira/" class="btn">back to home →</a></div>
+  </main>
+</div>
+
+<script src="/luispereira/main.js" defer></script>
+</body>
+</html>

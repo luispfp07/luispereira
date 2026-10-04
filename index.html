@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luís Pereira | Multimedia Designer</title>
+  <meta name="description" content="Luís Pereira is a multimedia designer working in branding, editorial, packaging, web design and video.">
+  <link rel="canonical" href="https://luispfp07.github.io/luispereira/">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Luís Pereira">
+  <meta property="og:title" content="Luís Pereira | Multimedia Designer">
+  <meta property="og:description" content="Branding, editorial, packaging, web design and video by multimedia designer Luís Pereira.">
+  <meta property="og:url" content="https://luispfp07.github.io/luispereira/">
+  <meta property="og:image" content="https://luispfp07.github.io/luispereira/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="800">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Luís Pereira | Multimedia Designer">
+  <meta name="twitter:description" content="Branding, editorial, packaging, web design and video by multimedia designer Luís Pereira.">
+  <meta name="twitter:image" content="https://luispfp07.github.io/luispereira/og-image.jpg">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#f9f9f9">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700;800&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add('js');</script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Luís Pereira",
+    "jobTitle": "Multimedia Designer",
+    "url": "https://luispfp07.github.io/luispereira/",
+    "image": "https://luispfp07.github.io/luispereira/portrait-og.jpg",
+    "email": "mailto:luispfp07@gmail.com",
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of Coimbra" },
+    "knowsAbout": ["Branding", "Editorial design", "Web design", "Packaging", "Video editing", "Email marketing", "Social media management"],
+    "sameAs": ["https://www.linkedin.com/in/lpfpereira"]
+  }
+  </script>
+
+  <style>
+    /* HERO */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4vw;
+      min-height: calc(90vh - var(--nav-h));
+      padding: 5vh 0 8vh;
+    }
+
+    .hero-text { position: relative; z-index: 10; flex: 1 1 55%; }
+
+    .hero-text h1 {
+      font-size: clamp(3.6rem, 10.8vw, 10.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.07em;
+      text-transform: lowercase;
+      margin-bottom: 4vh;
+    }
+
+    .hero-text .subtitle {
+      font-size: clamp(1.2rem, 2.7vw, 2.25rem);
+      line-height: 1.4;
+      text-transform: lowercase;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-image-container {
+      flex: 0 1 45%;
+      max-width: 540px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    #profile-canvas,
+    #profile-fallback {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      mix-blend-mode: darken;
+    }
+
+    #profile-fallback { filter: grayscale(100%); mix-blend-mode: multiply; }
+
+    /* ABOUT */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6vw;
+      font-size: clamp(1.08rem, 1.8vw, 1.62rem);
+      letter-spacing: -0.02em;
+    }
+
+    .about-text p { margin-bottom: 1.5em; line-height: 1.6; }
+
+    .skills-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 22px;
+      align-content: flex-start;
+    }
+
+    .skills-list li {
+      font-size: clamp(1.5rem, 2.7vw, 2.25rem);
+      font-weight: 800;
+      text-transform: lowercase;
+      letter-spacing: -0.04em;
+      line-height: 1.2;
+    }
+
+    /* PROJETOS EM DESTAQUE */
+    .featured-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 5vh;
+    }
+
+    .featured-header .section-title { margin-bottom: 0; }
+
+    @media (max-width: 900px) {
+      .hero { flex-direction: column; align-items: flex-start; min-height: 0; }
+      .hero-text, .hero-image-container { flex: none; width: 100%; }
+      .hero-image-container { justify-content: flex-start; }
+      .about-content { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+<canvas id="halftone-canvas" aria-hidden="true"></canvas>
+
+<header class="site-nav">
+  <nav class="inner" aria-label="Main">
+    <a href="index.html" class="logo" aria-label="Luís Pereira, home"><span class="marcador">lp.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about" id="nav-about"><span class="marcador">about</span></a></li>
+      <li><a href="projetos.html"><span class="marcador">projects</span></a></li>
+      <li><a href="cv.html"><span class="marcador">cv</span></a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="site-wrapper">
+  <main id="main">
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-text reveal">
+        <h1 id="hero-title"><span class="line"><span class="marcador">luís</span></span> <span class="line"><span class="marcador">pereira</span></span></h1>
+        <p class="subtitle"><span class="marcador">multimedia designer</span></p>
+      </div>
+      <div class="hero-image-container reveal">
+        <canvas id="profile-canvas" data-src="portrait.jpg" width="540" height="540"
+                role="img" aria-label="Portrait of Luís Pereira rendered as an interactive halftone dot pattern"></canvas>
+        <img id="profile-fallback" src="portrait.jpg" alt="Portrait of Luís Pereira" width="540" height="540" hidden>
+      </div>
+    </section>
+
+    <section id="about" aria-labelledby="about-title">
+      <h2 id="about-title" class="section-title reveal"><span class="marcador">about</span></h2>
+      <div class="about-content reveal">
+        <div class="about-text">
+          <p><span class="marcador"><strong>Hi, I'm Luís.</strong> I'm a multimedia designer with a passion for visual storytelling, inspired by film and TV series.</span></p>
+          <p><span class="marcador">I work across graphic design, web design, branding, and image and video editing. Currently a multimedia designer and marketing manager at Dalifal, and open to new opportunities and collaborations.</span></p>
+        </div>
+        <ul class="skills-list" aria-label="Skills">
+          <li><span class="marcador">branding</span></li>
+          <li><span class="marcador">editorial</span></li>
+          <li><span class="marcador">packaging</span></li>
+          <li><span class="marcador">web design</span></li>
+          <li><span class="marcador">image &amp; video editing</span></li>
+          <li><span class="marcador">email marketing</span></li>
+          <li><span class="marcador">social media management</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="work" aria-labelledby="work-title">
+      <div class="featured-header reveal">
+        <h2 id="work-title" class="section-title"><span class="marcador">selected work</span></h2>
+        <a href="projetos.html" class="btn">all projects →</a>
+      </div>
+      <ul class="cards">
+        <li class="card reveal">
+          <a href="projetos.html#flyer-neutura" class="card-link">
+            <div class="card-media">
+              <picture>
+                <source srcset="flyer-neutura-thumb.avif" type="image/avif">
+                <img src="flyer-neutura-thumb.jpg" alt="Open folded flyer for Neutura with product photos" width="800" height="533" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <h3 class="card-title"><span class="marcador">flyer neutura</span></h3>
+            <p class="card-meta"><span class="marcador">editorial · neutura</span></p>
+          </a>
+        </li>
+        <li class="card reveal">
+          <a href="projetos.html#packaging-neutura" class="card-link">
+            <div class="card-media">
+              <picture>
+                <source srcset="packaging-neutura-thumb.avif" type="image/avif">
+                <img src="packaging-neutura-thumb.jpg" alt="Neutura skewer packaging" width="516" height="601" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <h3 class="card-title"><span class="marcador">packaging neutura</span></h3>
+            <p class="card-meta"><span class="marcador">packaging · branding · neutura</span></p>
+          </a>
+        </li>
+        <li class="card reveal">
+          <a href="projetos.html#minorities-in-design" class="card-link">
+            <div class="card-media contain">
+              <picture>
+                <source srcset="dataviz-thumb.avif" type="image/avif">
+                <img src="dataviz-thumb.jpg" alt="Sankey diagram titled 'How successful are minorities in the design world?'" width="800" height="456" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <h3 class="card-title"><span class="marcador">minorities in design</span></h3>
+            <p class="card-meta"><span class="marcador">web · data visualisation</span></p>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section id="contact" class="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title" class="reveal"><span class="line"><span class="marcador">let's work</span></span> <span class="line"><span class="marcador">together</span></span></h2>
+      <a href="mailto:luispfp07@gmail.com" class="contact-email reveal"><span class="marcador">luispfp07@gmail.com</span></a>
+      <ul class="social-links reveal">
+        <li><a href="https://www.linkedin.com/in/lpfpereira" target="_blank" rel="noopener"><span class="marcador">linkedin ↗</span></a></li>
+        <li><a href="cv.html"><span class="marcador">cv / resume</span></a></li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="inner">
+    <p>© <span data-year>2026</span> Luís Pereira</p>
+    <ul>
+      <li><a href="mailto:luispfp07@gmail.com">email</a></li>
+      <li><a href="https://www.linkedin.com/in/lpfpereira" target="_blank" rel="noopener">linkedin</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="main.js" defer></script>
+<script src="profile.js" defer></script>
+<script>
+  // Estado ativo do menu: "about" só fica marcado quando a secção está no ecrã
+  document.addEventListener('DOMContentLoaded', () => {
+    const link = document.getElementById('nav-about');
+    const section = document.getElementById('about');
+    if (!('IntersectionObserver' in window)) return;
+    new IntersectionObserver(([entry]) => {
+      link.classList.toggle('active', entry.isIntersecting);
+    }, { rootMargin: '-40% 0px -40% 0px' }).observe(section);
+  });
+</script>
+</body>
+</html>

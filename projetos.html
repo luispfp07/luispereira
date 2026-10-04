@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects | Luís Pereira</title>
+  <meta name="description" content="Selected projects by Luís Pereira: packaging, flyers and vehicle graphics for Neutura, a data visualisation website and promotional videos.">
+  <link rel="canonical" href="https://luispfp07.github.io/luispereira/projetos.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Luís Pereira">
+  <meta property="og:title" content="Projects | Luís Pereira">
+  <meta property="og:description" content="Packaging, editorial, branding, web and video projects by multimedia designer Luís Pereira.">
+  <meta property="og:url" content="https://luispfp07.github.io/luispereira/projetos.html">
+  <meta property="og:image" content="https://luispfp07.github.io/luispereira/og-image.jpg">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#f9f9f9">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700;800&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add('js');</script>
+
+  <style>
+    .page-header { padding: 6vh 0 4vh; }
+    .page-header .section-title { margin-bottom: 3vh; }
+
+    /* FILTROS */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      list-style: none;
+    }
+
+    .filters button {
+      font: inherit;
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: lowercase;
+      letter-spacing: -0.03em;
+      min-height: 44px;
+      padding: 8px 16px;
+      background: var(--white);
+      color: var(--black);
+      border: 2px solid var(--black);
+      cursor: pointer;
+    }
+
+    .filters button[aria-pressed="true"],
+    .filters button:hover { background: var(--black); color: var(--white); }
+
+    .projects { padding: 2vh 0 10vh; }
+
+    /* =========================================
+       JANELA DO PROJETO (MODAL)
+       ========================================= */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background-color: var(--white);
+      z-index: 2000;
+      display: grid;
+      grid-template-columns: 1fr 1.5fr 1fr;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal[hidden] { display: none; }
+    .modal.is-open { opacity: 1; }
+
+    .close-modal {
+      position: fixed;
+      top: 20px;
+      right: var(--gutter);
+      z-index: 2010;
+      background: none;
+      border: none;
+      font: inherit;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      font-weight: 800;
+      text-transform: lowercase;
+      color: var(--black);
+      min-height: 44px;
+      padding: 0 8px;
+      cursor: pointer;
+    }
+
+    .close-modal:hover .marcador,
+    .close-modal:focus-visible .marcador {
+      background-color: var(--black);
+      color: var(--white);
+      box-shadow: 0.25em 0 0 var(--black), -0.25em 0 0 var(--black);
+    }
+
+    .modal-left {
+      display: flex;
+      align-items: flex-end;
+      padding: 6vw;
+    }
+
+    .modal-left h2 {
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 1.2;
+      letter-spacing: -0.06em;
+      text-transform: lowercase;
+    }
+
+    .modal-meta {
+      margin-top: 16px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: lowercase;
+    }
+
+    .modal-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 6vw;
+    }
+
+    .modal-desc {
+      font-size: clamp(1rem, 1.3vw, 1.25rem);
+      max-width: 340px;
+      line-height: 1.6;
+      font-weight: 700;
+    }
+
+    .modal-desc p + p { margin-top: 1em; }
+
+    .modal-desc a {
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .modal-desc a:hover { opacity: 0.6; }
+
+    .modal-center {
+      height: 100vh;
+      height: 100dvh;
+      overflow-y: auto;
+      padding: 15vh 0;
+      scrollbar-width: thin;
+    }
+
+    .modal-media { display: flex; flex-direction: column; gap: 4vh; }
+
+    .modal-media img,
+    .modal-media video {
+      width: 100%;
+      height: auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      background-color: var(--white);
+    }
+
+    .modal-media video { max-height: 75vh; object-fit: contain; margin: 0 auto; }
+
+    @media (max-width: 900px) {
+      .modal { display: block; overflow-y: auto; }
+      .modal-left, .modal-right { padding: 80px var(--gutter) 20px; justify-content: flex-start; }
+      .modal-right { padding-top: 20px; padding-bottom: 60px; }
+      .modal-center { height: auto; overflow: visible; padding: 0 var(--gutter); }
+      .close-modal { top: 10px; right: 10px; background: var(--white); }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+<canvas id="halftone-canvas" aria-hidden="true"></canvas>
+
+<header class="site-nav">
+  <nav class="inner" aria-label="Main">
+    <a href="index.html" class="logo" aria-label="Luís Pereira, home"><span class="marcador">lp.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#about"><span class="marcador">about</span></a></li>
+      <li><a href="projetos.html" aria-current="page"><span class="marcador">projects</span></a></li>
+      <li><a href="cv.html"><span class="marcador">cv</span></a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="site-wrapper">
+  <main id="main">
+    <div class="page-header">
+      <h1 class="section-title"><span class="marcador">projects</span></h1>
+      <ul class="filters" aria-label="Filter projects by area">
+        <li><button type="button" data-filter="all" aria-pressed="true">all</button></li>
+        <li><button type="button" data-filter="branding" aria-pressed="false">branding</button></li>
+        <li><button type="button" data-filter="editorial" aria-pressed="false">editorial</button></li>
+        <li><button type="button" data-filter="video" aria-pressed="false">video</button></li>
+        <li><button type="button" data-filter="web" aria-pressed="false">web</button></li>
+      </ul>
+    </div>
+
+    <section class="projects" aria-label="Project list">
+      <p class="sr-only" id="filter-status" aria-live="polite"></p>
+      <ul class="cards" id="project-grid">
+
+        <li class="card" data-category="editorial branding">
+          <a href="#flyer-neutura" class="card-link" data-project="flyer-neutura">
+            <div class="card-media">
+              <picture>
+                <source srcset="flyer-neutura-thumb.avif" type="image/avif">
+                <img src="flyer-neutura-thumb.jpg" alt="Open folded flyer for Neutura with product photos" width="800" height="533" decoding="async">
+              </picture>
+            </div>
+            <h2 class="card-title"><span class="marcador">flyer neutura</span></h2>
+            <p class="card-meta"><span class="marcador">editorial · neutura</span></p>
+          </a>
+        </li>
+
+        <li class="card" data-category="branding">
+          <a href="#neutura-truck" class="card-link" data-project="neutura-truck">
+            <div class="card-media">
+              <video muted loop playsinline preload="none" poster="neutura-truck-loop-poster.jpg" aria-hidden="true">
+                <source src="neutura-truck-loop.mp4" type="video/mp4">
+              </video>
+            </div>
+            <h2 class="card-title"><span class="marcador">neutura truck</span></h2>
+            <p class="card-meta"><span class="marcador">branding · vehicle graphics · neutura</span></p>
+          </a>
+        </li>
+
+        <li class="card" data-category="branding">
+          <a href="#packaging-neutura" class="card-link" data-project="packaging-neutura">
+            <div class="card-media">
+              <picture>
+                <source srcset="packaging-neutura-thumb.avif" type="image/avif">
+                <img src="packaging-neutura-thumb.jpg" alt="Neutura skewer packaging" width="516" height="601" decoding="async">
+              </picture>
+            </div>
+            <h2 class="card-title"><span class="marcador">packaging neutura</span></h2>
+            <p class="card-meta"><span class="marcador">packaging · branding · neutura</span></p>
+          </a>
+        </li>
+
+        <li class="card" data-category="web">
+          <a href="#minorities-in-design" class="card-link" data-project="minorities-in-design">
+            <div class="card-media contain">
+              <picture>
+                <source srcset="dataviz-thumb.avif" type="image/avif">
+                <img src="dataviz-thumb.jpg" alt="Sankey diagram titled 'How successful are minorities in the design world?'" width="800" height="456" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <h2 class="card-title"><span class="marcador">minorities in design</span></h2>
+            <p class="card-meta"><span class="marcador">web · data visualisation · university</span></p>
+          </a>
+        </li>
+
+        <li class="card" data-category="video">
+          <a href="#existencias" class="card-link" data-project="existencias">
+            <div class="card-media">
+              <video muted loop playsinline preload="none" poster="existencias-thumb-poster.jpg" aria-hidden="true">
+                <source src="existencias-thumb.mp4" type="video/mp4">
+              </video>
+            </div>
+            <h2 class="card-title"><span class="marcador">existências</span></h2>
+            <p class="card-meta"><span class="marcador">video · promotional film</span></p>
+          </a>
+        </li>
+
+        <li class="card" data-category="video">
+          <a href="#a-day-in-dei" class="card-link" data-project="a-day-in-dei">
+            <div class="card-media">
+              <picture>
+                <source srcset="a-day-in-dei-thumb.avif" type="image/avif">
+                <img src="a-day-in-dei-thumb.jpg" alt="Title card reading 'A day in DEI'" width="723" height="566" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <h2 class="card-title"><span class="marcador">a day in dei</span></h2>
+            <p class="card-meta"><span class="marcador">video · social media · university</span></p>
+          </a>
+        </li>
+
+      </ul>
+    </section>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="inner">
+    <p>© <span data-year>2026</span> Luís Pereira</p>
+    <ul>
+      <li><a href="mailto:luispfp07@gmail.com">email</a></li>
+      <li><a href="https://www.linkedin.com/in/lpfpereira" target="_blank" rel="noopener">linkedin</a></li>
+    </ul>
+  </div>
+</footer>
+
+<div id="projeto-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+  <button type="button" class="close-modal" id="close-modal">
+    <span class="marcador">close [x]</span><span class="sr-only"> project</span>
+  </button>
+  <div class="modal-left">
+    <div>
+      <h2 id="modal-title"></h2>
+      <p class="modal-meta" id="modal-meta"></p>
+    </div>
+  </div>
+  <div class="modal-center" id="modal-scroll-area">
+    <div class="modal-media" id="modal-media"></div>
+  </div>
+  <div class="modal-right">
+    <div class="modal-desc" id="modal-desc"></div>
+  </div>
+</div>
+
+<script src="main.js" defer></script>
+<script>
+  // ==========================================
+  // CONTEÚDO DOS PROJETOS
+  // Imagens: nome base do ficheiro (gera-se .avif + .jpg). Vídeos: nome do ficheiro .mp4.
+  // ==========================================
+  const PROJECTS = {
+    'flyer-neutura': {
+      title: 'flyer neutura',
+      meta: 'editorial · client: neutura',
+      desc: ['Folded flyer designed for SAGAL 26 to promote Neutura products.'],
+      media: [
+        { img: 'flyer-neutura-1', w: 1600, h: 1066, alt: 'Neutura flyer, outside spread' },
+        { img: 'flyer-neutura-2', w: 1600, h: 1066, alt: 'Neutura flyer, first inside spread' },
+        { img: 'flyer-neutura-3', w: 1600, h: 1066, alt: 'Neutura flyer, second inside spread' },
+        { img: 'flyer-neutura-4', w: 1600, h: 1066, alt: 'Neutura flyer, back panels' }
+      ]
+    },
+    'neutura-truck': {
+      title: 'neutura truck',
+      meta: 'branding · vehicle graphics · client: neutura',
+      desc: ['Vehicle graphics designed for the Neutura delivery truck.'],
+      media: [
+        { img: 'neutura-truck-1', w: 1600, h: 1195, alt: 'Neutura truck graphics, view 1' },
+        { img: 'neutura-truck-2', w: 1600, h: 1195, alt: 'Neutura truck graphics, view 2' },
+        { img: 'neutura-truck-3', w: 1600, h: 1195, alt: 'Neutura truck graphics, view 3' },
+        { img: 'neutura-truck-4', w: 1600, h: 1195, alt: 'Neutura truck graphics, view 4' },
+        { video: 'neutura-truck-loop.mp4', poster: 'neutura-truck-loop-poster.jpg', loop: true, label: 'Animated preview of the Neutura truck graphics' }
+      ]
+    },
+    'packaging-neutura': {
+      title: 'packaging neutura',
+      meta: 'packaging · branding · client: neutura',
+      desc: ['Packaging designed for the new Neutura product range: skewers, mash and rolls.'],
+      media: [
+        { img: 'packaging-skewers-fba', w: 600, h: 600, alt: 'Neutura skewer packaging, first variety' },
+        { img: 'packaging-skewers-fpc', w: 600, h: 600, alt: 'Neutura skewer packaging, second variety' },
+        { img: 'packaging-skewers-pbp', w: 600, h: 600, alt: 'Neutura skewer packaging, third variety' },
+        { img: 'packaging-mash-cb', w: 600, h: 600, alt: 'Neutura mash packaging, first variety' },
+        { img: 'packaging-mash-rcb', w: 600, h: 600, alt: 'Neutura mash packaging, second variety' },
+        { img: 'packaging-rolls', w: 600, h: 600, alt: 'Neutura rolls packaging' }
+      ]
+    },
+    'minorities-in-design': {
+      title: 'data visualisation: minorities in design',
+      meta: 'web · data visualisation · university project',
+      desc: [
+        'A website that visualises the Design Census 2019 dataset with a Sankey diagram, exploring how successful minorities are in the design industry.',
+        '<a href="https://student.dei.uc.pt/~pchurro/minorities_in_design/" target="_blank" rel="noopener">View the website ↗</a>'
+      ],
+      media: [
+        { img: 'dataviz', w: 1920, h: 1095, alt: 'Sankey diagram linking ethnicity, gender, LGBTQIA+ status, job position, salary and job satisfaction of designers' }
+      ]
+    },
+    'existencias': {
+      title: 'existências',
+      meta: 'video · promotional film · group project',
+      desc: [
+        'A group project to create a promotional film for Existências.',
+        'Existências is a non-profit social solidarity association based in Coimbra. Its main goals are social intervention and the promotion and protection of health, through social integration and preventive, curative and rehabilitative care.'
+      ],
+      media: [
+        { video: 'existencias.mp4', poster: 'existencias-poster.jpg', label: 'Promotional film for Existências' }
+      ]
+    },
+    'a-day-in-dei': {
+      title: 'a day in dei',
+      meta: 'video · social media · university project',
+      desc: [
+        'A video highlighting the Department of Informatics Engineering (DEI), created as part of a social media campaign to promote it.',
+        'The concept was inspired by a TikTok trend in which a person’s head is overlaid on top of videos of different scenarios.'
+      ],
+      media: [
+        { video: 'a-day-in-dei.mp4', poster: 'a-day-in-dei-poster.jpg', label: 'A day in DEI video' }
+      ]
+    }
+  };
+
+  // ==========================================
+  // FILTROS
+  // ==========================================
+  const filterButtons = document.querySelectorAll('.filters button');
+  const cards = document.querySelectorAll('#project-grid .card');
+  const filterStatus = document.getElementById('filter-status');
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      filterButtons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      let visible = 0;
+      cards.forEach(card => {
+        const show = filter === 'all' || card.dataset.category.split(' ').includes(filter);
+        card.hidden = !show;
+        if (show) visible++;
+      });
+      filterStatus.textContent = `${visible} project${visible === 1 ? '' : 's'} shown`;
+    });
+  });
+
+  // ==========================================
+  // MINIATURAS EM VÍDEO: só tocam quando estão no ecrã
+  // ==========================================
+  const thumbVideos = document.querySelectorAll('.card-media video');
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.play().catch(() => {});
+        else entry.target.pause();
+      });
+    }, { threshold: 0.25 });
+    thumbVideos.forEach(v => { v.muted = true; videoObserver.observe(v); });
+  }
+
+  // ==========================================
+  // JANELA DO PROJETO (MODAL)
+  // ==========================================
+  const modal = document.getElementById('projeto-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalMeta = document.getElementById('modal-meta');
+  const modalDesc = document.getElementById('modal-desc');
+  const modalMedia = document.getElementById('modal-media');
+  const modalScrollArea = document.getElementById('modal-scroll-area');
+  const closeButton = document.getElementById('close-modal');
+  const pageParts = [document.querySelector('.site-nav'), document.querySelector('.site-wrapper'), document.querySelector('.site-footer')];
+
+  let lastTrigger = null;
+  let openedByClick = false;
+
+  function buildMedia(item, index) {
+    if (item.video) {
+      const video = document.createElement('video');
+      video.src = `${item.video}`;
+      video.poster = `${item.poster}`;
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = 'none';
+      video.setAttribute('aria-label', item.label);
+      if (item.loop) {
+        video.loop = true;
+        video.muted = true;
+      }
+      return video;
+    }
+    const picture = document.createElement('picture');
+    const source = document.createElement('source');
+    source.srcset = `${item.img}.avif`;
+    source.type = 'image/avif';
+    const img = document.createElement('img');
+    img.src = `${item.img}.jpg`;
+    img.alt = item.alt;
+    img.width = item.w;
+    img.height = item.h;
+    img.decoding = 'async';
+    if (index > 0) img.loading = 'lazy';
+    picture.append(source, img);
+    return picture;
+  }
+
+  function openProject(slug) {
+    const project = PROJECTS[slug];
+    if (!project) return;
+
+    modalTitle.innerHTML = `<span class="marcador">${project.title}</span>`;
+    modalMeta.innerHTML = `<span class="marcador">${project.meta}</span>`;
+    modalDesc.innerHTML = project.desc.map(p => `<p><span class="marcador">${p}</span></p>`).join('');
+    modalMedia.replaceChildren(...project.media.map(buildMedia));
+
+    modal.hidden = false;
+    requestAnimationFrame(() => modal.classList.add('is-open'));
+    modalScrollArea.scrollTop = 0;
+    modal.scrollTop = 0;
+    document.documentElement.style.overflow = 'hidden';
+    pageParts.forEach(el => el && (el.inert = true));
+    closeButton.focus();
+  }
+
+  function closeProject() {
+    if (modal.hidden) return;
+    modalMedia.querySelectorAll('video').forEach(v => v.pause());
+    modal.classList.remove('is-open');
+    modal.hidden = true;
+    modalMedia.replaceChildren();
+    document.documentElement.style.overflow = '';
+    pageParts.forEach(el => el && (el.inert = false));
+
+    // Devolve o foco ao projeto que abriu a janela
+    const trigger = lastTrigger || document.querySelector(`[data-project="${location.hash.slice(1)}"]`);
+    if (trigger) trigger.focus();
+  }
+
+  // Abrir: atualiza o URL (#projeto) para se poder partilhar o link
+  document.querySelectorAll('[data-project]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      lastTrigger = link;
+      openedByClick = true;
+      history.pushState({ project: link.dataset.project }, '', `#${link.dataset.project}`);
+      openProject(link.dataset.project);
+    });
+  });
+
+  // Fechar: botão, tecla Esc ou botão "voltar" do browser
+  function requestClose() {
+    if (openedByClick) {
+      openedByClick = false;
+      history.back(); // o popstate trata de fechar
+    } else {
+      history.replaceState(null, '', location.pathname + location.search);
+      closeProject();
+    }
+  }
+
+  closeButton.addEventListener('click', requestClose);
+
+  document.addEventListener('keydown', (e) => {
+    if (modal.hidden) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      requestClose();
+    }
+    // Mantém o foco dentro da janela
+    if (e.key === 'Tab') {
+      const focusables = [...modal.querySelectorAll('button, a[href], video[controls]')].filter(el => el.offsetParent !== null);
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  window.addEventListener('popstate', () => {
+    const slug = location.hash.slice(1);
+    if (PROJECTS[slug]) openProject(slug);
+    else { openedByClick = false; closeProject(); }
+  });
+
+  // Link direto (ex.: vindo da página inicial): projetos.html#flyer-neutura
+  const initialSlug = location.hash.slice(1);
+  if (PROJECTS[initialSlug]) {
+    lastTrigger = document.querySelector(`[data-project="${initialSlug}"]`);
+    openProject(initialSlug);
+  }
+</script>
+</body>
+</html>

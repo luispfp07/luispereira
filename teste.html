@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luís Pereira | CMYK Dinâmico</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #111111;
+      --cyan: #00ffff;
+      --magenta: #ff00ff;
+      --yellow: #ffff00;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden; /* Removemos o scroll para focar na interatividade pura */
+      mix-blend-mode: multiply;
+    }
+
+    /* Padrão Halftone Estático no Fundo */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+              radial-gradient(var(--text-color) 1px, transparent 1px),
+              radial-gradient(var(--text-color) 1px, transparent 1px);
+      background-size: 20px 20px;
+      background-position: 0 0, 10px 10px;
+      opacity: 0.04;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 2vw;
+      padding: 3vw;
+      height: 100vh;
+      align-content: flex-start;
+      position: relative;
+    }
+
+    nav {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-bottom: 2px solid var(--text-color);
+      padding-bottom: 1rem;
+      margin-bottom: 8vh;
+      z-index: 10;
+    }
+
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      position: relative;
+    }
+
+    nav a::before, nav a::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0; opacity: 0; transition: all 0.2s ease;
+    }
+
+    nav a:hover::before { opacity: 1; color: var(--cyan); transform: translate(-2px, -2px); mix-blend-mode: multiply; }
+    nav a:hover::after { opacity: 1; color: var(--magenta); transform: translate(2px, 2px); mix-blend-mode: multiply; }
+
+    /* TÍTULO COM SEPARAÇÃO CMY DINÂMICA */
+    .title-container {
+      grid-column: 1 / 13;
+      position: relative;
+      /* Permite que as camadas se sobreponham perfeitamente */
+      display: flex;
+      align-items: center;
+    }
+
+    .title-layer {
+      font-size: clamp(4rem, 16vw, 20rem);
+      font-weight: 900;
+      line-height: 0.8;
+      letter-spacing: -0.07em;
+      text-transform: uppercase;
+      position: absolute;
+      top: 0;
+      left: 0;
+      mix-blend-mode: multiply;
+      /* Transição suave para o movimento do rato não ser brusco */
+      transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+      pointer-events: none;
+    }
+
+    .layer-c { color: var(--cyan); }
+    .layer-m { color: var(--magenta); }
+    .layer-y { color: var(--yellow); }
+    .layer-k { color: var(--text-color); position: relative; } /* Camada âncora (Preto) */
+
+    .subtitle {
+      grid-column: 6 / 13;
+      font-weight: 400;
+      font-size: clamp(1rem, 1.8vw, 2.5rem);
+      line-height: 1.2;
+      margin-top: 5vh;
+      border-left: 5px solid var(--cyan);
+      padding-left: 2vw;
+      z-index: 5;
+    }
+
+    /* AUTOCOLANTE ARRASTÁVEL (O Toque Whimsy) */
+    #sticker {
+      position: absolute;
+      top: 40%;
+      right: 10%;
+      width: 140px;
+      height: 140px;
+      background: var(--yellow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--text-color);
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      cursor: grab;
+      z-index: 50;
+      user-select: none;
+      mix-blend-mode: multiply;
+      box-shadow: inset -5px -5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    #sticker:active {
+      cursor: grabbing;
+      transform: scale(0.95);
+    }
+
+    /* MARQUEE CONTÍNUO NO RODAPÉ */
+    .marquee {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      background: var(--text-color);
+      color: var(--bg-color);
+      padding: 12px 0;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: flex;
+      overflow: hidden;
+      z-index: 100;
+    }
+
+    .marquee-content {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 20s linear infinite;
+    }
+
+    .marquee span {
+      padding: 0 2vw;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 768px) {
+      .subtitle { grid-column: 1 / -1; margin-top: 15vh; }
+      #sticker { top: 20%; right: 5%; width: 100px; height: 100px; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="grid">
+  <nav>
+    <div>Print Test_01</div>
+    <div>
+      <a href="#" data-text="Projetos">Projetos</a> &nbsp;&nbsp;&nbsp;
+      <a href="#" data-text="Info">Info</a>
+    </div>
+  </nav>
+
+  <div class="title-container">
+    <!-- Camadas de impressão separadas -->
+    <div class="title-layer layer-c" id="c-layer">Luís<br>Pereira</div>
+    <div class="title-layer layer-m" id="m-layer">Luís<br>Pereira</div>
+    <div class="title-layer layer-y" id="y-layer">Luís<br>Pereira</div>
+    <div class="title-layer layer-k">Luís<br>Pereira</div>
+  </div>
+
+  <div class="subtitle">
+    Art Direction & Design Editorial.<br>
+    A desconstruir a grelha em <strong>CMYK</strong>.
+  </div>
+
+  <!-- Elemento Draggable -->
+  <div id="sticker">Arrasta-me</div>
+</div>
+
+<div class="marquee">
+  <div class="marquee-content">
+    <!-- Repetimos o texto para o loop infinito funcionar sem quebras -->
+    <span>DESIGN EDITORIAL ++ ART DIRECTION ++ WEB EXPERIMENTAL ++</span>
+    <span>DESIGN EDITORIAL ++ ART DIRECTION ++ WEB EXPERIMENTAL ++</span>
+    <span>DESIGN EDITORIAL ++ ART DIRECTION ++ WEB EXPERIMENTAL ++</span>
+    <span>DESIGN EDITORIAL ++ ART DIRECTION ++ WEB EXPERIMENTAL ++</span>
+  </div>
+</div>
+
+<script>
+  // Lógica de Separação CMY Interativa no Título
+  const cLayer = document.getElementById('c-layer');
+  const mLayer = document.getElementById('m-layer');
+  const yLayer = document.getElementById('y-layer');
+
+  document.addEventListener('mousemove', (e) => {
+    // Calcula a posição do rato relativa ao centro do ecrã (-1 a 1)
+    const x = (e.clientX / window.innerWidth - 0.5) * 2;
+    const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+    // Multiplicadores diferentes para cada camada criam o efeito de desfoque/registo
+    cLayer.style.transform = `translate(${x * 35}px, ${y * 20}px)`;
+    mLayer.style.transform = `translate(${x * -25}px, ${y * -35}px)`;
+    yLayer.style.transform = `translate(${x * 15}px, ${y * -15}px)`;
+  });
+
+  // Lógica do Autocolante Arrastável (Drag & Drop)
+  const sticker = document.getElementById('sticker');
+  let isDragging = false;
+  let offsetX, offsetY;
+
+  sticker.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    // Calcula o ponto exato onde clicaste dentro do círculo
+    offsetX = e.clientX - sticker.getBoundingClientRect().left;
+    offsetY = e.clientY - sticker.getBoundingClientRect().top;
+    sticker.style.cursor = 'grabbing';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    // Move o sticker descontando o offset inicial para não "saltar"
+    sticker.style.left = `${e.clientX - offsetX}px`;
+    sticker.style.top = `${e.clientY - offsetY}px`;
+    sticker.style.right = 'auto'; // Remove o posicionamento da direita do CSS
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+    sticker.style.cursor = 'grab';
+  });
+</script>
+</body>
+</html>
