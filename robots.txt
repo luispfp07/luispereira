@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://luispfp07.github.io/luispereira/sitemap.xml
+Sitemap: http://luispedropereira.com/sitemap.xml

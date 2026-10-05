@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects | Luís Pereira</title>
   <meta name="description" content="Selected projects by Luís Pereira: packaging, flyers and vehicle graphics for Neutura, a data visualisation website and promotional videos.">
-  <link rel="canonical" href="https://luispfp07.github.io/luispereira/projetos.html">
+  <link rel="canonical" href="http://luispedropereira.com/projetos.html">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Luís Pereira">
   <meta property="og:title" content="Projects | Luís Pereira">
   <meta property="og:description" content="Packaging, editorial, branding, web and video projects by multimedia designer Luís Pereira.">
-  <meta property="og:url" content="https://luispfp07.github.io/luispereira/projetos.html">
-  <meta property="og:image" content="https://luispfp07.github.io/luispereira/og-image.jpg">
+  <meta property="og:url" content="http://luispedropereira.com/projetos.html">
+  <meta property="og:image" content="http://luispedropereira.com/og-image.jpg">
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
 
@@ -316,7 +316,7 @@
 <script>
   // ==========================================
   // CONTEÚDO DOS PROJETOS
-  // Imagens: nome base do ficheiro (gera-se .avif + .jpg). Vídeos: nome do ficheiro .mp4.
+  // Imagens: nome base do ficheiro (usa .avif + .jpg; avif: false = só .jpg). Vídeos: nome do ficheiro .mp4.
   // ==========================================
   const PROJECTS = {
     'flyer-neutura': {
@@ -335,10 +335,10 @@
       meta: 'branding · vehicle graphics · client: neutura',
       desc: ['Vehicle graphics designed for the Neutura delivery truck.'],
       media: [
-        { img: 'neutura-truck-1', w: 1600, h: 1195, alt: 'Neutura truck graphics, view 1' },
-        { img: 'neutura-truck-2', w: 1600, h: 1195, alt: 'Neutura truck graphics, view 2' },
-        { img: 'neutura-truck-3', w: 1600, h: 1195, alt: 'Neutura truck graphics, view 3' },
-        { img: 'neutura-truck-4', w: 1600, h: 1195, alt: 'Neutura truck graphics, view 4' },
+        { img: 'neutura-truck-1', avif: false, w: 1600, h: 1195, alt: 'Neutura truck graphics, view 1' },
+        { img: 'neutura-truck-2', avif: false, w: 1600, h: 1195, alt: 'Neutura truck graphics, view 2' },
+        { img: 'neutura-truck-3', avif: false, w: 1600, h: 1195, alt: 'Neutura truck graphics, view 3' },
+        { img: 'neutura-truck-4', avif: false, w: 1600, h: 1195, alt: 'Neutura truck graphics, view 4' },
         { video: 'neutura-truck-loop.mp4', poster: 'neutura-truck-loop-poster.jpg', loop: true, label: 'Animated preview of the Neutura truck graphics' }
       ]
     },
@@ -363,7 +363,7 @@
         '<a href="https://student.dei.uc.pt/~pchurro/minorities_in_design/" target="_blank" rel="noopener">View the website ↗</a>'
       ],
       media: [
-        { img: 'dataviz', w: 1920, h: 1095, alt: 'Sankey diagram linking ethnicity, gender, LGBTQIA+ status, job position, salary and job satisfaction of designers' }
+        { img: 'dataviz', avif: false, w: 1920, h: 1095, alt: 'Sankey diagram linking ethnicity, gender, LGBTQIA+ status, job position, salary and job satisfaction of designers' }
       ]
     },
     'existencias': {
@@ -456,9 +456,12 @@
       return video;
     }
     const picture = document.createElement('picture');
-    const source = document.createElement('source');
-    source.srcset = `${item.img}.avif`;
-    source.type = 'image/avif';
+    if (item.avif !== false) {
+      const source = document.createElement('source');
+      source.srcset = `${item.img}.avif`;
+      source.type = 'image/avif';
+      picture.append(source);
+    }
     const img = document.createElement('img');
     img.src = `${item.img}.jpg`;
     img.alt = item.alt;
@@ -466,7 +469,7 @@
     img.height = item.h;
     img.decoding = 'async';
     if (index > 0) img.loading = 'lazy';
-    picture.append(source, img);
+    picture.append(img);
     return picture;
   }
 
