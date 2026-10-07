@@ -66,6 +66,8 @@
       z-index: 2000;
       display: grid;
       grid-template-columns: 1fr 1.5fr 1fr;
+      grid-template-rows: 100vh;
+      grid-template-rows: 100dvh;
       opacity: 0;
       transition: opacity 0.3s ease;
     }
@@ -97,10 +99,13 @@
       box-shadow: 0.25em 0 0 var(--black), -0.25em 0 0 var(--black);
     }
 
+    .modal-left,
+    .modal-right { min-height: 0; overflow-y: auto; scrollbar-width: thin; }
+
     .modal-left {
       display: flex;
       align-items: flex-end;
-      padding: 6vw;
+      padding: 4vw;
     }
 
     .modal-left h2 {
@@ -119,10 +124,12 @@
 
     .modal-right {
       display: flex;
-      align-items: center;
       justify-content: flex-end;
-      padding: 6vw;
+      padding: 80px 4vw 40px;
     }
+
+    /* Centra na vertical sem cortar o topo quando o texto é longo */
+    .modal-desc { margin-block: auto; }
 
     .modal-desc {
       font-size: clamp(1rem, 1.3vw, 1.25rem);
@@ -132,6 +139,32 @@
     }
 
     .modal-desc p + p { margin-top: 1em; }
+
+    /* Casos de estudo: secções com título pequeno */
+    .modal-desc.is-case { font-size: 0.95rem; font-weight: 600; line-height: 1.5; max-width: 380px; }
+    .modal-desc h3 {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: lowercase;
+      letter-spacing: 0.02em;
+      color: var(--grey);
+      margin: 1.4em 0 0.3em;
+    }
+    .modal-desc h3:first-child { margin-top: 0; }
+    .modal-desc h3 + p { margin-top: 0; }
+
+    /* Ficha do projeto (cliente, ano, papel, ferramentas) */
+    .modal-facts {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4px 14px;
+      font-size: 0.95rem;
+      text-transform: lowercase;
+    }
+    .modal-facts dt { font-weight: 800; color: var(--grey); }
+    .modal-facts dd { font-weight: 700; }
+    .modal-facts[hidden] { display: none; }
 
     .modal-desc a {
       color: var(--black);
@@ -161,8 +194,11 @@
 
     .modal-media video { max-height: 75vh; object-fit: contain; margin: 0 auto; }
 
-    @media (max-width: 900px) {
+    /* Ecrãs até 1100px (tablets, portáteis pequenos): janela numa só coluna */
+    @media (max-width: 1100px) {
       .modal { display: block; overflow-y: auto; }
+      .modal-desc, .modal-desc.is-case { max-width: 640px; }
+      .modal-left, .modal-right { overflow: visible; }
       .modal-left, .modal-right { padding: 80px var(--gutter) 20px; justify-content: flex-start; }
       .modal-right { padding-top: 20px; padding-bottom: 60px; }
       .modal-center { height: auto; overflow: visible; padding: 0 var(--gutter); }
@@ -203,6 +239,26 @@
       <p class="sr-only" id="filter-status" aria-live="polite"></p>
       <ul class="cards" id="project-grid">
 
+        <li class="card" data-category="web">
+          <a href="#neutura-website" class="card-link" data-project="neutura-website">
+            <div class="card-media">
+              <img src="neutura-40-thumb.jpg" alt="Redesigned Neutura website showing the product range on a dark background" width="800" height="449" decoding="async">
+            </div>
+            <h2 class="card-title"><span class="marcador">neutura website</span></h2>
+            <p class="card-meta"><span class="marcador">web · ui design · neutura · 2026</span></p>
+          </a>
+        </li>
+
+        <li class="card" data-category="web">
+          <a href="#dalifal-website" class="card-link" data-project="dalifal-website">
+            <div class="card-media">
+              <img src="dalifal-40-thumb.jpg" alt="Redesigned Dalifal website homepage with the 40th anniversary logo" width="800" height="449" decoding="async">
+            </div>
+            <h2 class="card-title"><span class="marcador">dalifal website</span></h2>
+            <p class="card-meta"><span class="marcador">web · ui design · dalifal · 2026</span></p>
+          </a>
+        </li>
+
         <li class="card" data-category="editorial branding">
           <a href="#flyer-neutura" class="card-link" data-project="flyer-neutura">
             <div class="card-media">
@@ -212,7 +268,7 @@
               </picture>
             </div>
             <h2 class="card-title"><span class="marcador">flyer neutura</span></h2>
-            <p class="card-meta"><span class="marcador">editorial · neutura</span></p>
+            <p class="card-meta"><span class="marcador">editorial · neutura · 2026</span></p>
           </a>
         </li>
 
@@ -224,7 +280,7 @@
               </video>
             </div>
             <h2 class="card-title"><span class="marcador">neutura truck</span></h2>
-            <p class="card-meta"><span class="marcador">branding · vehicle graphics · neutura</span></p>
+            <p class="card-meta"><span class="marcador">branding · vehicle graphics · neutura · 2025</span></p>
           </a>
         </li>
 
@@ -237,32 +293,7 @@
               </picture>
             </div>
             <h2 class="card-title"><span class="marcador">packaging neutura</span></h2>
-            <p class="card-meta"><span class="marcador">packaging · branding · neutura</span></p>
-          </a>
-        </li>
-
-        <li class="card" data-category="web">
-          <a href="#minorities-in-design" class="card-link" data-project="minorities-in-design">
-            <div class="card-media contain">
-              <picture>
-                <source srcset="dataviz-thumb.avif" type="image/avif">
-                <img src="dataviz-thumb.jpg" alt="Sankey diagram titled 'How successful are minorities in the design world?'" width="800" height="456" loading="lazy" decoding="async">
-              </picture>
-            </div>
-            <h2 class="card-title"><span class="marcador">minorities in design</span></h2>
-            <p class="card-meta"><span class="marcador">web · data visualisation · university</span></p>
-          </a>
-        </li>
-
-        <li class="card" data-category="video">
-          <a href="#existencias" class="card-link" data-project="existencias">
-            <div class="card-media">
-              <video muted loop playsinline preload="none" poster="existencias-thumb-poster.jpg" aria-hidden="true">
-                <source src="existencias-thumb.mp4" type="video/mp4">
-              </video>
-            </div>
-            <h2 class="card-title"><span class="marcador">existências</span></h2>
-            <p class="card-meta"><span class="marcador">video · promotional film</span></p>
+            <p class="card-meta"><span class="marcador">packaging · branding · neutura · 2024</span></p>
           </a>
         </li>
 
@@ -275,7 +306,32 @@
               </picture>
             </div>
             <h2 class="card-title"><span class="marcador">a day in dei</span></h2>
-            <p class="card-meta"><span class="marcador">video · social media · university</span></p>
+            <p class="card-meta"><span class="marcador">video · social media · university · 2021/22</span></p>
+          </a>
+        </li>
+
+        <li class="card" data-category="web">
+          <a href="#minorities-in-design" class="card-link" data-project="minorities-in-design">
+            <div class="card-media contain">
+              <picture>
+                <source srcset="dataviz-thumb.avif" type="image/avif">
+                <img src="dataviz-thumb.jpg" alt="Sankey diagram titled 'How successful are minorities in the design world?'" width="800" height="456" loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <h2 class="card-title"><span class="marcador">minorities in design</span></h2>
+            <p class="card-meta"><span class="marcador">web · data visualisation · university · 2020/21</span></p>
+          </a>
+        </li>
+
+        <li class="card" data-category="video">
+          <a href="#existencias" class="card-link" data-project="existencias">
+            <div class="card-media">
+              <video muted loop playsinline preload="none" poster="existencias-thumb-poster.jpg" aria-hidden="true">
+                <source src="existencias-thumb.mp4" type="video/mp4">
+              </video>
+            </div>
+            <h2 class="card-title"><span class="marcador">existências</span></h2>
+            <p class="card-meta"><span class="marcador">video · promotional film · university · 2018/19</span></p>
           </a>
         </li>
 
@@ -302,6 +358,7 @@
     <div>
       <h2 id="modal-title"></h2>
       <p class="modal-meta" id="modal-meta"></p>
+      <dl class="modal-facts" id="modal-facts" hidden></dl>
     </div>
   </div>
   <div class="modal-center" id="modal-scroll-area">
@@ -319,10 +376,49 @@
   // Imagens: nome base do ficheiro (usa .avif + .jpg; avif: false = só .jpg). Vídeos: nome do ficheiro .mp4.
   // ==========================================
   const PROJECTS = {
+    'neutura-website': {
+      title: 'neutura website',
+      meta: 'web · ui design',
+      facts: [['client', 'neutura'], ['year', '2026'], ['role', 'solo: ui design and front-end'], ['tools', 'figma, html/css'], ['status', 'launching soon']],
+      desc: [
+        { h: 'context', p: 'A redesign of the official Neutura website, created for Dalifal’s 40th anniversary alongside the new Dalifal website.' },
+        { h: 'challenge', p: 'The website no longer matched the brand. The new Skewers and Migas bags gave Neutura a bolder look that the old site didn’t reflect.' },
+        { h: 'solution', p: 'A minimal, modern design built around the dark, bold style of the new packaging, putting the products first. The structure mirrors the Dalifal website, so visitors can tell Neutura is a Dalifal brand.' },
+        '<a href="https://luispfp07.github.io/neutura40/" target="_blank" rel="noopener">View the website</a>'
+      ],
+      media: [
+        { img: 'neutura-40-1', avif: false, w: 1600, h: 899, alt: 'Neutura website: “Já provou?” section with the six new product bags' },
+        { img: 'neutura-40-2', avif: false, w: 1600, h: 899, alt: 'Neutura website: featured range with skewer products and links to the online shop' },
+        { img: 'neutura-40-3', avif: false, w: 1600, h: 899, alt: 'Neutura website: downloadable product catalogues' },
+        { img: 'neutura-40-4', avif: false, w: 1600, h: 899, alt: 'Neutura website: contacts page' }
+      ]
+    },
+    'dalifal-website': {
+      title: 'dalifal website',
+      meta: 'web · ui design',
+      facts: [['client', 'dalifal'], ['year', '2026'], ['role', 'solo: ui design and front-end'], ['tools', 'figma, html/css'], ['status', 'launching soon']],
+      desc: [
+        { h: 'context', p: 'A redesign of the official Dalifal website for the company’s 40th anniversary (1986-2026).' },
+        { h: 'challenge', p: 'The previous website hadn’t been updated since 2007 and no longer reflected the company.' },
+        { h: 'solution', p: 'A minimal, modern design with a clear structure for the company, its Neutura brand, B2B partners, careers and contacts. It shares its structure with the new Neutura website, so the two read as one family.' },
+        '<a href="https://luispfp07.github.io/dalifal40/" target="_blank" rel="noopener">View the website</a>'
+      ],
+      media: [
+        { img: 'dalifal-40-1', avif: false, w: 1600, h: 899, alt: 'Dalifal website homepage: “40 Anos a Entregar Qualidade e Inovação”' },
+        { img: 'dalifal-40-2', avif: false, w: 1600, h: 899, alt: 'Dalifal website: company history and certifications section' },
+        { img: 'dalifal-40-3', avif: false, w: 1600, h: 899, alt: 'Dalifal website: section introducing the Neutura brand' },
+        { img: 'dalifal-40-4', avif: false, w: 1600, h: 899, alt: 'Dalifal website: contacts page' }
+      ]
+    },
     'flyer-neutura': {
       title: 'flyer neutura',
-      meta: 'editorial · client: neutura',
-      desc: ['Folded flyer designed for SAGAL 26 to promote Neutura products.'],
+      meta: 'editorial · print',
+      facts: [['client', 'neutura'], ['year', '2026'], ['event', 'sagalexpo 2026'], ['print run', '500 copies'], ['tools', 'indesign']],
+      desc: [
+        { h: 'context', p: 'A flyer for the Neutura stand at SAGALEXPO 2026, handed to visitors so they could get to know the brand and its products.' },
+        { h: 'process', p: 'The first idea was a single-fold cover that could hold other Neutura leaflets. After a few tests, I moved to a two-fold leaflet: more elegant, with the products on the front and texts about the brand on the back, which gave the content a clearer order.' },
+        { h: 'result', p: '500 copies were printed and the response was very positive. Most were handed out, and the stand received several contacts from international companies.' }
+      ],
       media: [
         { img: 'flyer-neutura-1', w: 1600, h: 1066, alt: 'Neutura flyer, outside spread' },
         { img: 'flyer-neutura-2', w: 1600, h: 1066, alt: 'Neutura flyer, first inside spread' },
@@ -332,8 +428,13 @@
     },
     'neutura-truck': {
       title: 'neutura truck',
-      meta: 'branding · vehicle graphics · client: neutura',
-      desc: ['Vehicle graphics designed for the Neutura delivery truck.'],
+      meta: 'branding · vehicle graphics',
+      facts: [['client', 'neutura'], ['year', '2025'], ['role', 'design'], ['tools', 'illustrator, photoshop']],
+      desc: [
+        { h: 'context', p: 'Graphics for a new Neutura delivery truck.' },
+        { h: 'goal', p: 'No vehicle carried the new identity created for the Skewers and Migas bags yet. The truck also had to work as advertising for these new products.' },
+        { h: 'solution', p: 'The design brings the packaging identity to the truck, so the new products are recognisable on the road. The animation shows the design applied to the vehicle.' }
+      ],
       media: [
         { img: 'neutura-truck-1', avif: false, w: 1600, h: 1195, alt: 'Neutura truck graphics, view 1' },
         { img: 'neutura-truck-2', avif: false, w: 1600, h: 1195, alt: 'Neutura truck graphics, view 2' },
@@ -344,23 +445,31 @@
     },
     'packaging-neutura': {
       title: 'packaging neutura',
-      meta: 'packaging · branding · client: neutura',
-      desc: ['Packaging designed for the new Neutura product range: skewers, mash and rolls.'],
+      meta: 'packaging · branding',
+      facts: [['client', 'neutura'], ['year', '2024'], ['products', 'skewers, migas, rolls'], ['on sale', 'supermarkets, mainly intermarché'], ['tools', 'photoshop, indesign']],
+      desc: [
+        { h: 'challenge', p: 'Neutura’s packaging at the time was plastic bags with labels stuck on. The brief was to break with that: these were new products and needed impact. They were also the brand’s first zip-lock bags for frozen food.' },
+        { h: 'solution', p: 'A dark background gives a gourmet feel, and a colour for each variety tells them apart while keeping one family look. The Rolls came later, as a variation of the Skewers design.' },
+        { h: 'result', p: 'The products are sold in several supermarkets, mostly Intermarché, and have had a very positive response.' }
+      ],
       media: [
         { img: 'packaging-skewers-fba', w: 600, h: 600, alt: 'Neutura skewer packaging, first variety' },
         { img: 'packaging-skewers-fpc', w: 600, h: 600, alt: 'Neutura skewer packaging, second variety' },
         { img: 'packaging-skewers-pbp', w: 600, h: 600, alt: 'Neutura skewer packaging, third variety' },
-        { img: 'packaging-mash-cb', w: 600, h: 600, alt: 'Neutura mash packaging, first variety' },
-        { img: 'packaging-mash-rcb', w: 600, h: 600, alt: 'Neutura mash packaging, second variety' },
+        { img: 'packaging-mash-cb', w: 600, h: 600, alt: 'Neutura Migas packaging, first variety' },
+        { img: 'packaging-mash-rcb', w: 600, h: 600, alt: 'Neutura Migas packaging, second variety' },
         { img: 'packaging-rolls', w: 600, h: 600, alt: 'Neutura rolls packaging' }
       ]
     },
     'minorities-in-design': {
-      title: 'data visualisation: minorities in design',
-      meta: 'web · data visualisation · university project',
+      title: 'minorities in design',
+      meta: 'web · data visualisation',
+      facts: [['course', 'data visualisation, master’s'], ['year', '2020/21'], ['team', 'with pedro churro'], ['tools', 'html/css, javascript (d3.js)']],
       desc: [
-        'A website that visualises the Design Census 2019 dataset with a Sankey diagram, exploring how successful minorities are in the design industry.',
-        '<a href="https://student.dei.uc.pt/~pchurro/minorities_in_design/" target="_blank" rel="noopener">View the website ↗</a>'
+        { h: 'context', p: 'A website for the Data Visualisation course in the first year of my master’s, made with Pedro Churro.' },
+        { h: 'goal', p: 'Explore how successful minorities are in the design industry, using the Design Census 2019 dataset.' },
+        { h: 'solution', p: 'A Sankey diagram showed the data more completely and made several correlations visible, from ethnicity and gender to salary and job satisfaction, so we could draw conclusions from them.' },
+        '<a href="https://student.dei.uc.pt/~pchurro/minorities_in_design/" target="_blank" rel="noopener">View the website</a>'
       ],
       media: [
         { img: 'dataviz', avif: false, w: 1920, h: 1095, alt: 'Sankey diagram linking ethnicity, gender, LGBTQIA+ status, job position, salary and job satisfaction of designers' }
@@ -368,10 +477,12 @@
     },
     'existencias': {
       title: 'existências',
-      meta: 'video · promotional film · group project',
+      meta: 'video · promotional film',
+      facts: [['course', 'audiovisual project, bachelor’s'], ['year', '2018/19'], ['team', '4 people'], ['role', 'writing, camera and lighting assistance'], ['tools', 'after effects']],
       desc: [
-        'A group project to create a promotional film for Existências.',
-        'Existências is a non-profit social solidarity association based in Coimbra. Its main goals are social intervention and the promotion and protection of health, through social integration and preventive, curative and rehabilitative care.'
+        { h: 'context', p: 'A promotional film for Existências, a non-profit association in Coimbra focused on social intervention and health care. Made for the Audiovisual Project course in the second year of my bachelor’s.' },
+        { h: 'process', p: 'We were a team of four, all sharing direction, filming and editing. My role was mostly behind the camera: writing and assisting the camera crew, for example with lighting.' },
+        { h: 'result', p: 'The association used the film, and it was shown at a festival at the university.' }
       ],
       media: [
         { video: 'existencias.mp4', poster: 'existencias-poster.jpg', label: 'Promotional film for Existências' }
@@ -379,10 +490,11 @@
     },
     'a-day-in-dei': {
       title: 'a day in dei',
-      meta: 'video · social media · university project',
+      meta: 'video · social media',
+      facts: [['course', 'marketing and communication, master’s'], ['year', '2021/22'], ['team', 'with francisco surrador'], ['tools', 'after effects']],
       desc: [
-        'A video highlighting the Department of Informatics Engineering (DEI), created as part of a social media campaign to promote it.',
-        'The concept was inspired by a TikTok trend in which a person’s head is overlaid on top of videos of different scenarios.'
+        { h: 'context', p: 'A video for the Marketing and Communication course in the second year of my master’s, made with Francisco Surrador.' },
+        { h: 'concept', p: 'A playful take on social media videos to promote the Department of Informatics Engineering (DEI). It was inspired by a TikTok trend where a person’s head is overlaid on videos of different scenarios.' }
       ],
       media: [
         { video: 'a-day-in-dei.mp4', poster: 'a-day-in-dei-poster.jpg', label: 'A day in DEI video' }
@@ -432,6 +544,7 @@
   const modalTitle = document.getElementById('modal-title');
   const modalMeta = document.getElementById('modal-meta');
   const modalDesc = document.getElementById('modal-desc');
+  const modalFacts = document.getElementById('modal-facts');
   const modalMedia = document.getElementById('modal-media');
   const modalScrollArea = document.getElementById('modal-scroll-area');
   const closeButton = document.getElementById('close-modal');
@@ -479,7 +592,14 @@
 
     modalTitle.innerHTML = `<span class="marcador">${project.title}</span>`;
     modalMeta.innerHTML = `<span class="marcador">${project.meta}</span>`;
-    modalDesc.innerHTML = project.desc.map(p => `<p><span class="marcador">${p}</span></p>`).join('');
+    // Cada parágrafo pode ser texto simples ou { h: 'título', p: 'texto' }
+    modalDesc.innerHTML = project.desc.map(item => typeof item === 'string'
+      ? `<p><span class="marcador">${item}</span></p>`
+      : `<h3><span class="marcador">${item.h}</span></h3><p><span class="marcador">${item.p}</span></p>`
+    ).join('');
+    modalDesc.classList.toggle('is-case', project.desc.some(item => typeof item !== 'string'));
+    modalFacts.hidden = !project.facts;
+    modalFacts.innerHTML = (project.facts || []).map(([k, v]) => `<dt><span class="marcador">${k}</span></dt><dd><span class="marcador">${v}</span></dd>`).join('');
     modalMedia.replaceChildren(...project.media.map(buildMedia));
 
     modal.hidden = false;

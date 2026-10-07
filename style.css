@@ -121,6 +121,11 @@ img, video { max-width: 100%; display: block; }
 }
 
 .logo {
+  /* Área de toque mínima de 44×44 */
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  min-height: 44px;
   font-size: clamp(1.3rem, 2.7vw, 1.8rem);
   font-weight: 800;
   text-transform: lowercase;
