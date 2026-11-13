@@ -21,7 +21,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800&display=swap">
   <link rel="stylesheet" href="style.css">
   <script>document.documentElement.classList.add('js');</script>
 
@@ -135,15 +135,15 @@
       font-size: clamp(1rem, 1.3vw, 1.25rem);
       max-width: 340px;
       line-height: 1.6;
-      font-weight: 700;
+      font-weight: 500;
     }
 
     .modal-desc p + p { margin-top: 1em; }
 
     /* Casos de estudo: secções com título pequeno */
-    .modal-desc.is-case { font-size: 0.95rem; font-weight: 600; line-height: 1.5; max-width: 380px; }
+    .modal-desc.is-case { font-size: 0.95rem; font-weight: 500; line-height: 1.5; max-width: 380px; }
     .modal-desc h3 {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 800;
       text-transform: lowercase;
       letter-spacing: 0.02em;
@@ -163,7 +163,7 @@
       text-transform: lowercase;
     }
     .modal-facts dt { font-weight: 800; color: var(--grey); }
-    .modal-facts dd { font-weight: 700; }
+    .modal-facts dd { font-weight: 500; }
     .modal-facts[hidden] { display: none; }
 
     .modal-desc a {
@@ -188,7 +188,8 @@
     .modal-media video {
       width: 100%;
       height: auto;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      outline: 1px solid rgba(5, 5, 5, 0.15);
+      outline-offset: -1px;
       background-color: var(--white);
     }
 
@@ -242,7 +243,7 @@
         <li class="card" data-category="web">
           <a href="#neutura-website" class="card-link" data-project="neutura-website">
             <div class="card-media">
-              <img src="neutura-40-thumb.jpg" alt="Redesigned Neutura website showing the product range on a dark background" width="800" height="449" decoding="async">
+              <img src="neutura-40-thumb.jpg" alt="" width="800" height="449" decoding="async">
             </div>
             <h2 class="card-title"><span class="marcador">neutura website</span></h2>
             <p class="card-meta"><span class="marcador">web · ui design · neutura · 2026</span></p>
@@ -252,7 +253,7 @@
         <li class="card" data-category="web">
           <a href="#dalifal-website" class="card-link" data-project="dalifal-website">
             <div class="card-media">
-              <img src="dalifal-40-thumb.jpg" alt="Redesigned Dalifal website homepage with the 40th anniversary logo" width="800" height="449" decoding="async">
+              <img src="dalifal-40-thumb.jpg" alt="" width="800" height="449" decoding="async">
             </div>
             <h2 class="card-title"><span class="marcador">dalifal website</span></h2>
             <p class="card-meta"><span class="marcador">web · ui design · dalifal · 2026</span></p>
@@ -264,7 +265,7 @@
             <div class="card-media">
               <picture>
                 <source srcset="flyer-neutura-thumb.avif" type="image/avif">
-                <img src="flyer-neutura-thumb.jpg" alt="Open folded flyer for Neutura with product photos" width="800" height="533" decoding="async">
+                <img src="flyer-neutura-thumb.jpg" alt="" width="800" height="533" decoding="async">
               </picture>
             </div>
             <h2 class="card-title"><span class="marcador">flyer neutura</span></h2>
@@ -289,7 +290,7 @@
             <div class="card-media">
               <picture>
                 <source srcset="packaging-neutura-thumb.avif" type="image/avif">
-                <img src="packaging-neutura-thumb.jpg" alt="Neutura skewer packaging" width="516" height="601" decoding="async">
+                <img src="packaging-neutura-thumb.jpg" alt="" width="516" height="601" decoding="async">
               </picture>
             </div>
             <h2 class="card-title"><span class="marcador">packaging neutura</span></h2>
@@ -302,7 +303,7 @@
             <div class="card-media">
               <picture>
                 <source srcset="a-day-in-dei-thumb.avif" type="image/avif">
-                <img src="a-day-in-dei-thumb.jpg" alt="Title card reading 'A day in DEI'" width="723" height="566" loading="lazy" decoding="async">
+                <img src="a-day-in-dei-thumb.jpg" alt="" width="723" height="566" loading="lazy" decoding="async">
               </picture>
             </div>
             <h2 class="card-title"><span class="marcador">a day in dei</span></h2>
@@ -315,7 +316,7 @@
             <div class="card-media contain">
               <picture>
                 <source srcset="dataviz-thumb.avif" type="image/avif">
-                <img src="dataviz-thumb.jpg" alt="Sankey diagram titled 'How successful are minorities in the design world?'" width="800" height="456" loading="lazy" decoding="async">
+                <img src="dataviz-thumb.jpg" alt="" width="800" height="456" loading="lazy" decoding="async">
               </picture>
             </div>
             <h2 class="card-title"><span class="marcador">minorities in design</span></h2>
@@ -345,14 +346,14 @@
     <p>© <span data-year>2026</span> Luís Pereira</p>
     <ul>
       <li><a href="mailto:luispfp07@gmail.com">email</a></li>
-      <li><a href="https://www.linkedin.com/in/lpfpereira" target="_blank" rel="noopener">linkedin</a></li>
+      <li><a href="https://www.linkedin.com/in/lpfpereira" target="_blank" rel="noopener">linkedin<span class="sr-only"> (opens in a new tab)</span></a></li>
     </ul>
   </div>
 </footer>
 
 <div id="projeto-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
-  <button type="button" class="close-modal" id="close-modal">
-    <span class="marcador">close [x]</span><span class="sr-only"> project</span>
+  <button type="button" class="close-modal" id="close-modal" aria-label="Close project">
+    <span class="marcador" aria-hidden="true">close [x]</span>
   </button>
   <div class="modal-left">
     <div>
@@ -383,8 +384,8 @@
       desc: [
         { h: 'context', p: 'A redesign of the official Neutura website, created for Dalifal’s 40th anniversary alongside the new Dalifal website.' },
         { h: 'challenge', p: 'The website no longer matched the brand. The new Skewers and Migas bags gave Neutura a bolder look that the old site didn’t reflect.' },
-        { h: 'solution', p: 'A minimal, modern design built around the dark, bold style of the new packaging, putting the products first. The structure mirrors the Dalifal website, so visitors can tell Neutura is a Dalifal brand.' },
-        '<a href="https://luispfp07.github.io/neutura40/" target="_blank" rel="noopener">View the website</a>'
+        { h: 'solution', p: 'Black pages and the gold of the Neutura logo, taken straight from the new bags. The products sit on a dark slate texture and open every section. The page structure mirrors the Dalifal website, so visitors can tell Neutura is a Dalifal brand.' },
+        '<a href="https://luispfp07.github.io/neutura40/" target="_blank" rel="noopener">View the website<span class="sr-only"> (opens in a new tab)</span></a>'
       ],
       media: [
         { img: 'neutura-40-1', avif: false, w: 1600, h: 899, alt: 'Neutura website: “Já provou?” section with the six new product bags' },
@@ -400,8 +401,8 @@
       desc: [
         { h: 'context', p: 'A redesign of the official Dalifal website for the company’s 40th anniversary (1986-2026).' },
         { h: 'challenge', p: 'The previous website hadn’t been updated since 2007 and no longer reflected the company.' },
-        { h: 'solution', p: 'A minimal, modern design with a clear structure for the company, its Neutura brand, B2B partners, careers and contacts. It shares its structure with the new Neutura website, so the two read as one family.' },
-        '<a href="https://luispfp07.github.io/dalifal40/" target="_blank" rel="noopener">View the website</a>'
+        { h: 'solution', p: 'A white layout where the orange of the 40-year logo is the only accent, with real photos of the warehouse and the delivery fleet. Separate sections for the company, Neutura, B2B partners, careers and contacts, in the same structure as the new Neutura website.' },
+        '<a href="https://luispfp07.github.io/dalifal40/" target="_blank" rel="noopener">View the website<span class="sr-only"> (opens in a new tab)</span></a>'
       ],
       media: [
         { img: 'dalifal-40-1', avif: false, w: 1600, h: 899, alt: 'Dalifal website homepage: “40 Anos a Entregar Qualidade e Inovação”' },
@@ -416,8 +417,8 @@
       facts: [['client', 'neutura'], ['year', '2026'], ['event', 'sagalexpo 2026'], ['print run', '500 copies'], ['tools', 'indesign']],
       desc: [
         { h: 'context', p: 'A flyer for the Neutura stand at SAGALEXPO 2026, handed to visitors so they could get to know the brand and its products.' },
-        { h: 'process', p: 'The first idea was a single-fold cover that could hold other Neutura leaflets. After a few tests, I moved to a two-fold leaflet: more elegant, with the products on the front and texts about the brand on the back, which gave the content a clearer order.' },
-        { h: 'result', p: '500 copies were printed and the response was very positive. Most were handed out, and the stand received several contacts from international companies.' }
+        { h: 'process', p: 'The first idea was a single-fold cover that could hold other Neutura leaflets. After a few tests, I moved to a two-fold leaflet: products on the front, the story of the brand on the back.' },
+        { h: 'result', p: '500 copies printed, most of them handed out at the stand. The fair brought several contacts from international companies.' }
       ],
       media: [
         { img: 'flyer-neutura-1', w: 1600, h: 1066, alt: 'Neutura flyer, outside spread' },
@@ -449,8 +450,8 @@
       facts: [['client', 'neutura'], ['year', '2024'], ['products', 'skewers, migas, rolls'], ['on sale', 'supermarkets, mainly intermarché'], ['tools', 'photoshop, indesign']],
       desc: [
         { h: 'challenge', p: 'Neutura’s packaging at the time was plastic bags with labels stuck on. The brief was to break with that: these were new products and needed impact. They were also the brand’s first zip-lock bags for frozen food.' },
-        { h: 'solution', p: 'A dark background gives a gourmet feel, and a colour for each variety tells them apart while keeping one family look. The Rolls came later, as a variation of the Skewers design.' },
-        { h: 'result', p: 'The products are sold in several supermarkets, mostly Intermarché, and have had a very positive response.' }
+        { h: 'solution', p: 'A dark background sets them apart from the usual frozen-food shelf, and each variety gets its own colour inside the same layout. The Rolls came later, as a variation of the Skewers design.' },
+        { h: 'result', p: 'On sale in several supermarkets, mostly Intermarché.' }
       ],
       media: [
         { img: 'packaging-skewers-fba', w: 600, h: 600, alt: 'Neutura skewer packaging, first variety' },
@@ -469,7 +470,7 @@
         { h: 'context', p: 'A website for the Data Visualisation course in the first year of my master’s, made with Pedro Churro.' },
         { h: 'goal', p: 'Explore how successful minorities are in the design industry, using the Design Census 2019 dataset.' },
         { h: 'solution', p: 'A Sankey diagram showed the data more completely and made several correlations visible, from ethnicity and gender to salary and job satisfaction, so we could draw conclusions from them.' },
-        '<a href="https://student.dei.uc.pt/~pchurro/minorities_in_design/" target="_blank" rel="noopener">View the website</a>'
+        '<a href="https://student.dei.uc.pt/~pchurro/minorities_in_design/" target="_blank" rel="noopener">View the website<span class="sr-only"> (opens in a new tab)</span></a>'
       ],
       media: [
         { img: 'dataviz', avif: false, w: 1920, h: 1095, alt: 'Sankey diagram linking ethnicity, gender, LGBTQIA+ status, job position, salary and job satisfaction of designers' }
@@ -524,17 +525,21 @@
   });
 
   // ==========================================
-  // MINIATURAS EM VÍDEO: só tocam quando estão no ecrã
+  // MINIATURAS EM VÍDEO
+  // Paradas por defeito: só animam com o rato por cima ou com foco do teclado,
+  // e nunca com prefers-reduced-motion (WCAG 2.2.2, conteúdo em movimento).
   // ==========================================
-  const thumbVideos = document.querySelectorAll('.card-media video');
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
-    const videoObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.play().catch(() => {});
-        else entry.target.pause();
-      });
-    }, { threshold: 0.25 });
-    thumbVideos.forEach(v => { v.muted = true; videoObserver.observe(v); });
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.card-media video').forEach(video => {
+      const link = video.closest('.card-link');
+      video.muted = true;
+      const play = () => video.play().catch(() => {});
+      const stop = () => { video.pause(); video.currentTime = 0; };
+      link.addEventListener('mouseenter', play);
+      link.addEventListener('mouseleave', stop);
+      link.addEventListener('focus', play);
+      link.addEventListener('blur', stop);
+    });
   }
 
   // ==========================================

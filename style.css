@@ -5,6 +5,9 @@
   --black: #050505;
   --white: #f9f9f9;
   --grey: #555;
+  /* Acento: o magenta de processo do efeito meio-tom. Só para interação
+     (hover, seleção), nunca para texto corrido. Preto sobre magenta = 6.6:1 */
+  --accent: #ff00ff;
   --font: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --gutter: 6vw;
   --nav-h: 76px;
@@ -33,6 +36,7 @@ body {
 }
 
 img, video { max-width: 100%; display: block; }
+::selection { background: var(--accent); color: var(--black); }
 [hidden] { display: none !important; }
 
 #halftone-canvas {
@@ -83,6 +87,9 @@ img, video { max-width: 100%; display: block; }
   color: var(--white);
   box-shadow: 0.25em 0 0 var(--black), -0.25em 0 0 var(--black);
 }
+
+/* Hover: o marcador passa a magenta (a mesma tinta do fundo meio-tom) */
+.marcador { transition: background-color 0.2s ease, box-shadow 0.2s ease; }
 
 /* Cada linha de um título num bloco próprio: evita o <br>,
    que fazia os leitores de ecrã lerem "luíspereira". */
@@ -157,7 +164,12 @@ img, video { max-width: 100%; display: block; }
   transition: color 0.3s ease;
 }
 
-.nav-links a:hover { color: var(--grey); }
+.nav-links a:hover .marcador,
+.social-links a:hover .marcador,
+.card-link:hover .card-title .marcador {
+  background-color: var(--accent);
+  box-shadow: 0.25em 0 0 var(--accent), -0.25em 0 0 var(--accent);
+}
 
 .nav-links a[aria-current] .marcador,
 .nav-links a.active .marcador,
@@ -275,7 +287,6 @@ section { padding: 9vh 0; }
   min-height: 44px;
 }
 
-.social-links a:hover { text-decoration: line-through; }
 
 .site-footer {
   border-top: 1px solid rgba(5, 5, 5, 0.12);
@@ -291,7 +302,7 @@ section { padding: 9vh 0; }
   justify-content: space-between;
   gap: 12px 24px;
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: lowercase;
 }
 
@@ -397,7 +408,7 @@ section { padding: 9vh 0; }
 
 .card-meta {
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: lowercase;
   color: var(--grey);
 }

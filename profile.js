@@ -25,7 +25,8 @@
   let running = false;
 
   const img = new Image();
-  img.src = canvas.dataset.src;
+  // Usa a versão embutida (portrait-data.js) quando existe; senão, o ficheiro normal
+  img.src = window.PORTRAIT_DATA || canvas.dataset.src;
 
   img.onload = () => {
     height = Math.round(img.height * (WIDTH / img.width));
@@ -37,7 +38,16 @@
     sample.height = height;
     const sctx = sample.getContext('2d', { willReadFrequently: true });
     sctx.drawImage(img, 0, 0, WIDTH, height);
-    const data = sctx.getImageData(0, 0, WIDTH, height).data;
+
+    // Ao abrir o ficheiro localmente (file://) o browser bloqueia a leitura dos
+    // píxeis. Nesse caso mostra-se a foto normal em vez de um espaço vazio.
+    let data;
+    try {
+      data = sctx.getImageData(0, 0, WIDTH, height).data;
+    } catch (err) {
+      showFallback();
+      return;
+    }
 
     // Canvas visível à resolução do ecrã (nitidez em ecrãs retina)
     canvas.width = Math.round(WIDTH * dpr);
@@ -72,11 +82,13 @@
     }
   };
 
-  img.onerror = () => {
+  img.onerror = showFallback;
+
+  function showFallback() {
     canvas.hidden = true;
     const fallback = document.getElementById('profile-fallback');
     if (fallback) fallback.hidden = false;
-  };
+  }
 
   function onMove(e) {
     const rect = canvas.getBoundingClientRect();

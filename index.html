@@ -27,7 +27,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800&display=swap">
   <link rel="stylesheet" href="style.css">
   <script>document.documentElement.classList.add('js');</script>
 
@@ -131,6 +131,31 @@
 
     .featured-header .section-title { margin-bottom: 0; }
 
+    /* Ritmo vertical: cada secção com o seu espaço, em vez de 9vh em tudo */
+    #about { padding: 16vh 0 8vh; }
+    #work { padding: 8vh 0 4vh; }
+    #contact { padding: 20vh 0 12vh; }
+
+    /* Destaques: o primeiro projeto maior, os outros dois ao lado */
+    .cards.featured { grid-template-columns: 1.8fr 1fr 1fr; align-items: start; }
+
+    .about-text p { font-weight: 400; letter-spacing: 0; }
+    /* O marcador cobre a altura da linha toda: sem faixas de pontos entre linhas */
+    .about-text .marcador { padding: 0.3em 0; }
+
+    @media (max-width: 900px) {
+      .cards.featured { grid-template-columns: 1fr 1fr; }
+      .cards.featured .card:first-child { grid-column: 1 / -1; }
+    }
+    @media (max-width: 600px) {
+      #about { padding: 10vh 0 5vh; }
+      #work { padding: 5vh 0 3vh; }
+      #contact { padding: 12vh 0 8vh; }
+    }
+    @media (max-width: 560px) {
+      .cards.featured { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 900px) {
       .hero { flex-direction: column; align-items: flex-start; min-height: 0; }
       .hero-text, .hero-image-container { flex: none; width: 100%; }
@@ -164,9 +189,9 @@
         <p class="subtitle"><span class="marcador">multimedia designer</span></p>
       </div>
       <div class="hero-image-container reveal">
-        <canvas id="profile-canvas" data-src="portrait.png" width="540" height="540"
+        <canvas id="profile-canvas" data-src="portrait.jpg" width="540" height="540"
                 role="img" aria-label="Portrait of Luís Pereira rendered as an interactive halftone dot pattern"></canvas>
-        <img id="profile-fallback" src="portrait.png" alt="Portrait of Luís Pereira" width="540" height="540" hidden>
+        <img id="profile-fallback" src="portrait.jpg" alt="Portrait of Luís Pereira" width="540" height="540" hidden>
       </div>
     </section>
 
@@ -174,8 +199,8 @@
       <h2 id="about-title" class="section-title reveal"><span class="marcador">about</span></h2>
       <div class="about-content reveal">
         <div class="about-text">
-          <p><span class="marcador"><strong>Hi, I'm Luís.</strong> I'm a multimedia designer with a passion for visual storytelling, inspired by film and TV series.</span></p>
-          <p><span class="marcador">I work across graphic design, web design, branding, and image and video editing. Currently a multimedia designer and marketing manager at Dalifal, and open to new opportunities and collaborations.</span></p>
+          <p><span class="marcador"><strong>I'm Luís, a multimedia designer in Coimbra.</strong> A lot of my ideas start with film and TV.</span></p>
+          <p><span class="marcador">I joined Dalifal, a food distribution company, in 2023 and have run its creative department since 2024: packaging, vehicle graphics, websites and the day-to-day social media of Neutura, Até Ti and Dalifal.</span></p>
         </div>
         <ul class="skills-list" aria-label="Skills">
           <li><span class="marcador">branding</span></li>
@@ -194,22 +219,13 @@
         <h2 id="work-title" class="section-title"><span class="marcador">selected work</span></h2>
         <a href="projetos.html" class="btn">all projects</a>
       </div>
-      <ul class="cards">
-        <li class="card reveal">
-          <a href="projetos.html#neutura-truck" class="card-link">
-            <div class="card-media">
-              <img src="neutura-truck-loop-poster.jpg" alt="Neutura delivery truck with the new vehicle graphics" width="404" height="718" loading="lazy" decoding="async">
-            </div>
-            <h3 class="card-title"><span class="marcador">neutura truck</span></h3>
-            <p class="card-meta"><span class="marcador">branding · vehicle graphics · neutura</span></p>
-          </a>
-        </li>
+      <ul class="cards featured">
         <li class="card reveal">
           <a href="projetos.html#packaging-neutura" class="card-link">
             <div class="card-media">
               <picture>
                 <source srcset="packaging-neutura-thumb.avif" type="image/avif">
-                <img src="packaging-neutura-thumb.jpg" alt="Neutura skewer packaging" width="516" height="601" loading="lazy" decoding="async">
+                <img src="packaging-neutura-thumb.jpg" alt="" width="516" height="601" loading="lazy" decoding="async">
               </picture>
             </div>
             <h3 class="card-title"><span class="marcador">packaging neutura</span></h3>
@@ -217,9 +233,18 @@
           </a>
         </li>
         <li class="card reveal">
+          <a href="projetos.html#neutura-truck" class="card-link">
+            <div class="card-media">
+              <img src="neutura-truck-loop-poster.jpg" alt="" width="404" height="718" loading="lazy" decoding="async">
+            </div>
+            <h3 class="card-title"><span class="marcador">neutura truck</span></h3>
+            <p class="card-meta"><span class="marcador">branding · vehicle graphics · neutura</span></p>
+          </a>
+        </li>
+        <li class="card reveal">
           <a href="projetos.html#neutura-website" class="card-link">
             <div class="card-media">
-              <img src="neutura-40-thumb.jpg" alt="Redesigned Neutura website showing the product range on a dark background" width="800" height="449" loading="lazy" decoding="async">
+              <img src="neutura-40-thumb.jpg" alt="" width="800" height="449" loading="lazy" decoding="async">
             </div>
             <h3 class="card-title"><span class="marcador">neutura website</span></h3>
             <p class="card-meta"><span class="marcador">web · ui design · neutura</span></p>
@@ -229,10 +254,10 @@
     </section>
 
     <section id="contact" class="contact" aria-labelledby="contact-title">
-      <h2 id="contact-title" class="reveal"><span class="line"><span class="marcador">let's work</span></span> <span class="line"><span class="marcador">together</span></span></h2>
+      <h2 id="contact-title" class="reveal"><span class="line"><span class="marcador">open to new</span></span> <span class="line"><span class="marcador">opportunities</span></span></h2>
       <a href="mailto:luispfp07@gmail.com" class="contact-email reveal"><span class="marcador">luispfp07@gmail.com</span></a>
       <ul class="social-links reveal">
-        <li><a href="https://www.linkedin.com/in/lpfpereira" target="_blank" rel="noopener"><span class="marcador">linkedin</span></a></li>
+        <li><a href="https://www.linkedin.com/in/lpfpereira" target="_blank" rel="noopener"><span class="marcador">linkedin</span><span class="sr-only"> (opens in a new tab)</span></a></li>
         <li><a href="cv.html"><span class="marcador">cv / resume</span></a></li>
       </ul>
     </section>
@@ -245,12 +270,13 @@
     <p>© <span data-year>2026</span> Luís Pereira</p>
     <ul>
       <li><a href="mailto:luispfp07@gmail.com">email</a></li>
-      <li><a href="https://www.linkedin.com/in/lpfpereira" target="_blank" rel="noopener">linkedin</a></li>
+      <li><a href="https://www.linkedin.com/in/lpfpereira" target="_blank" rel="noopener">linkedin<span class="sr-only"> (opens in a new tab)</span></a></li>
     </ul>
   </div>
 </footer>
 
 <script src="main.js" defer></script>
+<script src="portrait-data.js" defer></script>
 <script src="profile.js" defer></script>
 <script>
   // Estado ativo do menu: "about" só fica marcado quando a secção está no ecrã
